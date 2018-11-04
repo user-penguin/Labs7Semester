@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Pane id="controlSpace" fx:id="controlSpace" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: derive(black,90%);">
+         <children>
+            <Button fx:id="groupCreator" layoutX="25.0" layoutY="35.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="150.0" text="новая группа" />
+            <Button fx:id="starter" layoutX="25.0" layoutY="5.0" mnemonicParsing="false" onAction="#testWorking" prefHeight="10.0" prefWidth="150.0" text="старт" />
+            <Button fx:id="addNewCrazy" layoutX="25.0" layoutY="65.0" mnemonicParsing="false" onAction="#addNewCrazy" prefHeight="10.0" prefWidth="150.0" text="new crazy" />
+         </children></Pane>
+      <Pane prefHeight="200.0" prefWidth="700.0">
+         <children>
+            <Label alignment="CENTER" prefWidth="700.0" text="Лаборатория XX" textAlignment="CENTER">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="log" layoutY="680.0" />
+         </children>
+      </Pane>
+   </children>
+</HBox>
