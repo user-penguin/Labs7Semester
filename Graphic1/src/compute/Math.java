@@ -1,4 +1,4 @@
-package math;
+package compute;
 
 public class Math {
 

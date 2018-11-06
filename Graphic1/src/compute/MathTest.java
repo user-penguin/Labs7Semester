@@ -1,4 +1,4 @@
-package math;
+package compute;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ public class MathTest {
                 {3, 1}
         };
 
-        double [][] expected = math.Math.multiple(a, b);
+        double [][] expected = compute.Math.multiple(a, b);
         assertArrayEquals(actual, expected);
     }
 
@@ -50,7 +50,7 @@ public class MathTest {
                 {3}
         };
 
-        double [][] expected = math.Math.multiple(a, b);
+        double [][] expected = compute.Math.multiple(a, b);
         assertArrayEquals(actual, expected);
     }
 }
