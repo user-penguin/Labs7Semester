@@ -18,4 +18,5 @@ public class Main {
         senior.experimenting();
         crazy.experimenting();
     }
+
 }
