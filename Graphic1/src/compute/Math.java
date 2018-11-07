@@ -20,4 +20,18 @@ public class Math {
         }
         return matrix;
     }
+
+    public static double[] multiple (double a[], double b[][]) {
+        int newColumns = a.length;
+        // итоговая матрица
+        double[] matrix = new double[newColumns];
+        for (int i = 0; i < a.length; i++) {
+            double sum = 0;
+            for (int j = 0; j < a.length; j++) {
+                sum += a[j] * b[i][j];
+            }
+            matrix[i] = sum;
+        }
+        return matrix;
+    }
 }
