@@ -2,7 +2,7 @@ package transform;
 
 public class DefaultTransform {
 
-    private static final int SIZE = 4;
+    public static final int SIZE = 4;
 
     // получить матрицу вращения вокруг оси абсцисс на угол phi
     public static double[][] getRotateMatrixX (double phi) {
