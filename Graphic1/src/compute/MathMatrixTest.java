@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
 
-public class MathTest {
+public class MathMatrixTest {
 
     @Test
     public void multipleMatrixOnMatrix() {
@@ -26,7 +26,7 @@ public class MathTest {
                 {3, 1}
         };
 
-        double [][] expected = compute.Math.multiple(a, b);
+        double [][] expected = MathMatrix.multiple(a, b);
         assertArrayEquals(actual, expected);
     }
 
@@ -50,7 +50,7 @@ public class MathTest {
                 {3}
         };
 
-        double [][] expected = compute.Math.multiple(a, b);
+        double [][] expected = MathMatrix.multiple(a, b);
         assertArrayEquals(actual, expected);
     }
 
@@ -70,7 +70,7 @@ public class MathTest {
                 {0, 0, 0}
         };
 
-        double [][] expected = compute.Math.multiple(a, b);
+        double [][] expected = MathMatrix.multiple(a, b);
         assertArrayEquals(actual, expected);
     }
 }

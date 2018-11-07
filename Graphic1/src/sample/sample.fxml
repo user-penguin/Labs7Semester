@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="600.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
     <Pane fx:id="controlePane" prefHeight="600.0" prefWidth="359.0" style="-fx-background-color: gold">
       <children>
         <Button fx:id="startButton" layoutX="146.0" layoutY="561.0" mnemonicParsing="false" onAction="#start" text="Начать" />
           <Button layoutX="253.0" layoutY="46.0" mnemonicParsing="false" onAction="#YRot" text="Ok" />
           <Button layoutX="253.0" layoutY="85.0" mnemonicParsing="false" onAction="#ZRot" text="Ok" />
-          <Button layoutX="253.0" layoutY="123.0" mnemonicParsing="false" text="Ok" />
-          <Button layoutX="253.0" layoutY="161.0" mnemonicParsing="false" text="Ok" />
-          <Button layoutX="253.0" layoutY="199.0" mnemonicParsing="false" text="Ok" />
+          <Button layoutX="253.0" layoutY="199.0" mnemonicParsing="false" onAction="#Scale" text="Ok" />
           <Button layoutX="251.0" layoutY="313.0" mnemonicParsing="false" onAction="#Trans" text="Ok" />
           <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" onAction="#XRot" text="Ok" />
         <Slider layoutX="21.0" layoutY="16.0" max="359.0" prefWidth="176.0" fx:id="xRotate" />
@@ -45,6 +46,10 @@
         <Slider fx:id="XTrans" layoutX="20.0" layoutY="245.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="73.0" layoutY="260.0" prefHeight="17.1328125" prefWidth="71.0" text="X Transfer" textAlignment="CENTER" />
         <Label fx:id="XTransLabel" layoutX="208.0" layoutY="239.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XTrans.value}" />
+            <Button layoutX="108.0" layoutY="398.0" mnemonicParsing="false" text="XY" />
+            <Button layoutX="163.0" layoutY="398.0" mnemonicParsing="false" text="YZ" />
+            <Button layoutX="215.0" layoutY="398.0" mnemonicParsing="false" text="ZX" />
+            <Label layoutX="131.0" layoutY="366.0" text="Reflect on axis" />
       </children>
     </Pane>
   </children>

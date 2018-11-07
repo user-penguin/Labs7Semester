@@ -1,6 +1,6 @@
 package transform;
 
-import compute.Math;
+import compute.MathMatrix;
 
 public class TransformLib {
 
@@ -8,7 +8,7 @@ public class TransformLib {
     public static double[][] calculateOrto (double[][] stock) {
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = Math.multiple(stock[i], OrtographProjection.getProjectionXY());
+            dots[i] = MathMatrix.multiple(stock[i], OrtographProjection.getProjectionXY());
         }
         return dots;
     }
@@ -17,7 +17,7 @@ public class TransformLib {
     public static double[][] calculateScale(double[][] stock, double xS, double yS, double zS) {
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = Math.multiple(stock[i], DefaultTransform.getScaleMatrix(xS, yS, zS));
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getScaleMatrix(xS, yS, zS));
         }
         return dots;
     }
@@ -25,7 +25,7 @@ public class TransformLib {
     public static double[][] calculateRotateX(double[][] stock, double angle) {
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = Math.multiple(stock[i], DefaultTransform.getRotateMatrixX(angle));
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixX(Math.PI*angle/180));
         }
         return dots;
     }
@@ -33,7 +33,7 @@ public class TransformLib {
     public static double[][] calculateRotateY(double[][] stock, double angle) {
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = Math.multiple(stock[i], DefaultTransform.getRotateMatrixY(angle));
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixY(Math.PI*angle/180));
         }
         return dots;
     }
@@ -41,7 +41,7 @@ public class TransformLib {
     public static double[][] calculateRotateZ(double[][] stock, double angle) {
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = Math.multiple(stock[i], DefaultTransform.getRotateMatrixZ(angle));
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixZ(Math.PI*angle/180));
         }
         return dots;
     }
@@ -49,7 +49,7 @@ public class TransformLib {
     public static double[][] calculateTransfer(double[][] stock, double xTr, double yTr, double zTr) {
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = Math.multiple(stock[i], DefaultTransform.getTransferMatrix(xTr, yTr, zTr));
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getTransferMatrix(xTr, yTr, zTr));
         }
         return dots;
     }

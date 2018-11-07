@@ -1,6 +1,6 @@
 package compute;
 
-public class Math {
+public class MathMatrix {
 
     // умножение матриц
     public static double[][] multiple (double a[][], double b[][]) {

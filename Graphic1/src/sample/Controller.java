@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.scene.control.Slider;
 import transform.TransformLib;
 
 import static transform.TransformLib.*;
@@ -14,6 +15,25 @@ import static transform.TransformLib.*;
 public class Controller {
     private Stage stage = new Stage() ;
     private Scene scene;
+    @FXML
+    private Slider xRotate;
+    @FXML
+    private Slider yRotate;
+    @FXML
+    private Slider zRotate;
+    @FXML
+    private Slider XScale;
+    @FXML
+    private Slider YScale;
+    @FXML
+    private Slider ZScale;
+    @FXML
+    private Slider XTrans;
+    @FXML
+    private Slider YTrans;
+    @FXML
+    private Slider ZTrans;
+
 
     private double dots[][];
     @FXML
@@ -23,26 +43,49 @@ public class Controller {
     }
     @FXML
     private void XRot () {
-
-        dots = calculateRotateX(dots, 20);
+        dots = calculateRotateX(dots, xRotate.getValue());
         draw(dots);
     }
     @FXML
     private void YRot () {
 
-        dots = calculateRotateY(dots, 20);
+        dots = calculateRotateY(dots, yRotate.getValue());
         draw(dots);
     }
     @FXML
     private void ZRot () {
 
-        dots = calculateRotateZ(dots, 20);
+        dots = calculateRotateZ(dots, zRotate.getValue());
         draw(dots);
     }
     @FXML
+    private void Scale () {
+        dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
+        draw(dots);
+    }
+    @FXML
+    private void ReflectXY () {
+
+        dots = calculateRotateZ(dots);
+        draw(dots);
+    }
+    @FXML
+    private void ReflectYZ () {
+
+        dots = calculateRotateZ(dots);
+        draw(dots);
+    }
+    @FXML
+    private void ReflectZX () {
+
+        dots = calculateRotateZ(dots);
+        draw(dots);
+    }
+
+    @FXML
     private void Trans () {
 
-        dots = calculateTransfer(dots, 20, 20, 0);
+        dots = calculateTransfer(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue());
         draw(dots);
     }
     private void draw (double dots[][]){
