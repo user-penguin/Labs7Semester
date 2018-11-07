@@ -45,4 +45,12 @@ public class TransformLib {
         }
         return dots;
     }
+    // переместить
+    public static double[][] calculateTransfer(double[][] stock, double xTr, double yTr, double zTr) {
+        double[][] dots = new double[stock.length][];
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = Math.multiple(stock[i], DefaultTransform.getTransferMatrix(xTr, yTr, zTr));
+        }
+        return dots;
+    }
 }
