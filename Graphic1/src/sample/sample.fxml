@@ -24,9 +24,15 @@
         <Label layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}" fx:id="xRotateLabel" />
         <Label fx:id="yRotateLabel" layoutX="208.0" layoutY="48.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${yRotate.value}" />
         <Label fx:id="zRotateLabel" layoutX="208.0" layoutY="87.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{zRotate.value}" />
-        <Label fx:id="ScaleLabel" layoutX="210.0" layoutY="125.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{ScaleSlider.value}" />
-        <Label layoutX="75.0" layoutY="146.0" prefHeight="17.1328125" prefWidth="71.0" text="Scale" textAlignment="CENTER" />
-        <Slider fx:id="ScaleSlider" layoutX="22.0" layoutY="131.0" max="359.0" prefWidth="176.0" />
+        <Label fx:id="XScaleLabel" layoutX="210.0" layoutY="125.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{XScale.value}" />
+        <Label layoutX="75.0" layoutY="146.0" prefHeight="17.1328125" prefWidth="71.0" text="X Scale" textAlignment="CENTER" />
+        <Slider fx:id="XScale" layoutX="22.0" layoutY="131.0" max="359.0" prefWidth="176.0" />
+            <Slider fx:id="YScale" layoutX="22.0" layoutY="169.0" max="359.0" prefWidth="176.0" />
+            <Label layoutX="75.0" layoutY="184.0" prefHeight="17.1328125" prefWidth="71.0" text="Y Scale" textAlignment="CENTER" />
+            <Label fx:id="YScaleLabel" layoutX="210.0" layoutY="163.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{YScale.value}" />
+            <Slider fx:id="ZScale" layoutX="22.0" layoutY="207.0" max="359.0" prefWidth="176.0" />
+            <Label layoutX="75.0" layoutY="222.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Scale" textAlignment="CENTER" />
+            <Label fx:id="ScaleLabelZ" layoutX="210.0" layoutY="201.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{ZScale.value}" />
       </children>
     </Pane>
   </children>
