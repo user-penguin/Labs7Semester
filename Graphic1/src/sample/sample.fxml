@@ -11,28 +11,43 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
-    <Pane fx:id="controlePane" prefHeight="600.0" prefWidth="326.0" style="-fx-background-color: gold">
+    <Pane fx:id="controlePane" prefHeight="600.0" prefWidth="359.0" style="-fx-background-color: gold">
       <children>
-        <Button fx:id="startButton" layoutX="73.0" layoutY="560.0" mnemonicParsing="false" onAction="#start" text="Начать" />
-        <Slider layoutX="21.0" layoutY="16.0" max="359.0" onMouseDragged="#change" prefWidth="176.0" fx:id="xRotate" />
+        <Button fx:id="startButton" layoutX="146.0" layoutY="561.0" mnemonicParsing="false" onAction="#start" text="Начать" />
+          <Button layoutX="253.0" layoutY="46.0" mnemonicParsing="false" text="Ok" />
+          <Button layoutX="253.0" layoutY="85.0" mnemonicParsing="false" text="Ok" />
+          <Button layoutX="253.0" layoutY="123.0" mnemonicParsing="false" text="Ok" />
+          <Button layoutX="253.0" layoutY="161.0" mnemonicParsing="false" text="Ok" />
+          <Button layoutX="253.0" layoutY="199.0" mnemonicParsing="false" text="Ok" />
+          <Button layoutX="251.0" layoutY="313.0" mnemonicParsing="false" text="Ok" />
+        <Slider layoutX="21.0" layoutY="16.0" max="359.0" prefWidth="176.0" fx:id="xRotate" />
         <Label layoutX="74.0" layoutY="31.0" prefHeight="17.1328125" prefWidth="71.0" text="X rotate" textAlignment="CENTER" />
-        <Button layoutX="73.0" layoutY="488.0" mnemonicParsing="false" text="Accept" />
+        <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" text="Ok" />
         <Slider fx:id="yRotate" layoutX="21.0" layoutY="56.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="74.0" layoutY="71.0" prefHeight="17.1328125" prefWidth="71.0" text="Y rotate" textAlignment="CENTER" />
         <Slider fx:id="zRotate" layoutX="20.0" layoutY="93.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="73.0" layoutY="108.0" prefHeight="17.1328125" prefWidth="71.0" text="Z rotate" textAlignment="CENTER" />
-        <Label layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}" fx:id="xRotateLabel" />
+        <Label fx:id="xRotateLabel" layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}"  />
         <Label fx:id="yRotateLabel" layoutX="208.0" layoutY="48.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${yRotate.value}" />
-        <Label fx:id="zRotateLabel" layoutX="208.0" layoutY="87.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{zRotate.value}" />
-        <Label fx:id="XScaleLabel" layoutX="210.0" layoutY="125.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{XScale.value}" />
+        <Label fx:id="zRotateLabel" layoutX="208.0" layoutY="87.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${zRotate.value}" />
+        <Label fx:id="XScaleLabel" layoutX="210.0" layoutY="125.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XScale.value}" />
         <Label layoutX="75.0" layoutY="146.0" prefHeight="17.1328125" prefWidth="71.0" text="X Scale" textAlignment="CENTER" />
         <Slider fx:id="XScale" layoutX="22.0" layoutY="131.0" max="359.0" prefWidth="176.0" />
-            <Slider fx:id="YScale" layoutX="22.0" layoutY="169.0" max="359.0" prefWidth="176.0" />
-            <Label layoutX="75.0" layoutY="184.0" prefHeight="17.1328125" prefWidth="71.0" text="Y Scale" textAlignment="CENTER" />
-            <Label fx:id="YScaleLabel" layoutX="210.0" layoutY="163.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{YScale.value}" />
-            <Slider fx:id="ZScale" layoutX="22.0" layoutY="207.0" max="359.0" prefWidth="176.0" />
-            <Label layoutX="75.0" layoutY="222.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Scale" textAlignment="CENTER" />
-            <Label fx:id="ScaleLabelZ" layoutX="210.0" layoutY="201.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="{ZScale.value}" />
+        <Slider fx:id="YScale" layoutX="22.0" layoutY="169.0" max="359.0" prefWidth="176.0" />
+        <Label layoutX="75.0" layoutY="184.0" prefHeight="17.1328125" prefWidth="71.0" text="Y Scale" textAlignment="CENTER" />
+        <Label fx:id="YScaleLabel" layoutX="210.0" layoutY="163.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${YScale.value}" />
+        <Slider fx:id="ZScale" layoutX="22.0" layoutY="207.0" max="359.0" prefWidth="176.0" />
+        <Label layoutX="75.0" layoutY="222.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Scale" textAlignment="CENTER" />
+        <Label fx:id="ZScaleLabel" layoutX="210.0" layoutY="201.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${ZScale.value}" />
+        <Label fx:id="ZTransLabel" layoutX="208.0" layoutY="315.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${ZTrans.value}" />
+        <Label layoutX="73.0" layoutY="336.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Transfer" textAlignment="CENTER" />
+        <Slider fx:id="ZTrans" layoutX="20.0" layoutY="321.0" max="359.0" prefWidth="176.0" />
+        <Label fx:id="YTransLabel" layoutX="208.0" layoutY="277.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${YTrans.value}" />
+        <Label layoutX="73.0" layoutY="298.0" prefHeight="17.1328125" prefWidth="71.0" text="Y Transfer" textAlignment="CENTER" />
+        <Slider fx:id="YTrans" layoutX="20.0" layoutY="283.0" max="359.0" prefWidth="176.0" />
+        <Slider fx:id="XTrans" layoutX="20.0" layoutY="245.0" max="359.0" prefWidth="176.0" />
+        <Label layoutX="73.0" layoutY="260.0" prefHeight="17.1328125" prefWidth="71.0" text="X Transfer" textAlignment="CENTER" />
+        <Label fx:id="XTransLabel" layoutX="208.0" layoutY="239.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XTrans.value}" />
       </children>
     </Pane>
   </children>
