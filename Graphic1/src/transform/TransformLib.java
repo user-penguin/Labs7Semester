@@ -45,6 +45,30 @@ public class TransformLib {
         }
         return dots;
     }
+    // отобразить относительно XY
+    public static double[][] calculateReflectionXY(double[][] stock) {
+        double[][] dots = new double[stock.length][];
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getMirrorXYMatrix());
+        }
+        return dots;
+    }
+    // отобразить относительно YZ
+    public static double[][] calculateReflectionYZ(double[][] stock) {
+        double[][] dots = new double[stock.length][];
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getMirrorYZMatrix());
+        }
+        return dots;
+    }
+    // отобразить относительно ZX
+    public static double[][] calculateReflectionZX(double[][] stock) {
+        double[][] dots = new double[stock.length][];
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getMirrorZXMatrix());
+        }
+        return dots;
+    }
     // переместить
     public static double[][] calculateTransfer(double[][] stock, double xTr, double yTr, double zTr) {
         double[][] dots = new double[stock.length][];

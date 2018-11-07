@@ -46,9 +46,9 @@
         <Slider fx:id="XTrans" layoutX="20.0" layoutY="245.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="73.0" layoutY="260.0" prefHeight="17.1328125" prefWidth="71.0" text="X Transfer" textAlignment="CENTER" />
         <Label fx:id="XTransLabel" layoutX="208.0" layoutY="239.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XTrans.value}" />
-            <Button layoutX="108.0" layoutY="398.0" mnemonicParsing="false" text="XY" />
-            <Button layoutX="163.0" layoutY="398.0" mnemonicParsing="false" text="YZ" />
-            <Button layoutX="215.0" layoutY="398.0" mnemonicParsing="false" text="ZX" />
+            <Button layoutX="108.0" layoutY="398.0" mnemonicParsing="false" onAction="#ReflectXY" text="XY" />
+            <Button layoutX="163.0" layoutY="398.0" mnemonicParsing="false" onAction="#ReflectYZ" text="YZ" />
+            <Button layoutX="215.0" layoutY="398.0" mnemonicParsing="false" onAction="#ReflectZX" text="ZX" />
             <Label layoutX="131.0" layoutY="366.0" text="Reflect on axis" />
       </children>
     </Pane>

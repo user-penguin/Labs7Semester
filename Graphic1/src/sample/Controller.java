@@ -66,19 +66,19 @@ public class Controller {
     @FXML
     private void ReflectXY () {
 
-        dots = calculateRotateZ(dots);
+        dots = calculateReflectionXY(dots);
         draw(dots);
     }
     @FXML
     private void ReflectYZ () {
 
-        dots = calculateRotateZ(dots);
+        dots = calculateReflectionYZ(dots);
         draw(dots);
     }
     @FXML
     private void ReflectZX () {
 
-        dots = calculateRotateZ(dots);
+        dots = calculateReflectionZX(dots);
         draw(dots);
     }
 
