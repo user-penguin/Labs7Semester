@@ -85,7 +85,13 @@ public class Controller {
 
     @FXML
     private void Scale() {
-        dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
+        if (UsePoint.isSelected()) {
+            dots = calculateScaleByDot(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue(),
+                    Double.parseDouble(XPoint.getText()), Double.parseDouble(YPoint.getText()),
+                    Double.parseDouble(ZPoint.getText()));
+        } else {
+            dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
+        }
         draw(dots);
     }
 
@@ -109,13 +115,7 @@ public class Controller {
 
     @FXML
     private void Trans() {
-        if (UsePoint.isSelected()) {
-            dots = calculateScaleByDot(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue(),
-                    Double.parseDouble(XPoint.getText()), Double.parseDouble(YPoint.getText()),
-                    Double.parseDouble(ZPoint.getText()));
-        } else {
-            dots = calculateTransfer(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue());
-        }
+        dots = calculateTransfer(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue());
         draw(dots);
     }
 
