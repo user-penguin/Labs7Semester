@@ -105,4 +105,38 @@ public class TransformLib {
         }
         return dots;
     }
+
+    // подпрограмма расчёта минимальной заданной координаты
+    private static double calculateMin (double dots[][], int coordinate) {
+        double min = dots[0][coordinate];
+        for (int i = 1; i < dots.length; i++) { if (dots[i][coordinate] < min) min = dots[i][coordinate];}
+        return min;
+    }
+
+    // подпрограмма расчёта максимальной заданной координаты
+    private static double calculateMax (double dots[][], int coordinate) {
+        double max = dots[0][coordinate];
+        for (int i = 1; i < dots.length; i++) { if (dots[i][coordinate] > max) max = dots[i][coordinate];}
+        return max;
+    }
+
+    // вычисление средней точки по X
+    public static double calculateMiddleX (double dots[][]) {
+        double min = calculateMin(dots, 0);
+        double max = calculateMax(dots, 0);
+        return (min + max) / 2;
+    }
+    // вычисление средней точки по Y
+    public static double calculateMiddleY (double dots[][]) {
+        double min = calculateMin(dots, 1);
+        double max = calculateMax(dots, 1);
+        return (min + max) / 2;
+    }
+
+    // вычисление средней точки по Z
+    public static double calculateMiddleZ (double dots[][]) {
+        double min = calculateMin(dots, 2);
+        double max = calculateMax(dots, 2);
+        return (min + max) / 2;
+    }
 }
