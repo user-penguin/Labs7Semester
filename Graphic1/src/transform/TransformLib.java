@@ -23,7 +23,7 @@ public class TransformLib {
     }
 
     // растянуть относительно точки x0,y0,z0
-    public static double[][] calculateScaleByDot (double[][] stock, double xS, double yS, double zS,
+    public static double[][] calculateScaleByDot(double[][] stock, double xS, double yS, double zS,
                                                   double x0, double y0, double z0) {
         // создадим массив с точками, где начало координат смещено на x0, y0, z0
         double[][] dots = new double[stock.length][];

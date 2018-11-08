@@ -85,6 +85,7 @@ public class Controller {
 
     @FXML
     private void Scale() {
+        // масштабируем относительно точки или нет
         if (UsePoint.isSelected()) {
             dots = calculateScaleByDot(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue(),
                     Double.parseDouble(XPoint.getText()), Double.parseDouble(YPoint.getText()),
