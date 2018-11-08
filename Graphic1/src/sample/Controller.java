@@ -4,6 +4,8 @@ import compute.Dots;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -13,7 +15,7 @@ import transform.TransformLib;
 import static transform.TransformLib.*;
 
 public class Controller {
-    private Stage stage = new Stage() ;
+    private Stage stage = new Stage();
     private Scene scene;
 
     @FXML
@@ -43,63 +45,81 @@ public class Controller {
     @FXML
     private Slider ZTrans;
 
+    @FXML
+    private CheckBox UsePoint;
+
+    @FXML
+    private TextField XPoint;
+
+    @FXML
+    private TextField YPoint;
+
+    @FXML
+    private TextField ZPoint;
+
     private double dots[][];
 
     @FXML
-    private void start () {
+    private void start() {
         dots = calculateScale(Dots.dotsK, 20, 20, 10);
         draw(dots);
     }
 
     @FXML
-    private void XRot () {
+    private void XRot() {
         dots = calculateRotateX(dots, xRotate.getValue());
         draw(dots);
     }
 
     @FXML
-    private void YRot () {
+    private void YRot() {
         dots = calculateRotateY(dots, yRotate.getValue());
         draw(dots);
     }
 
     @FXML
-    private void ZRot () {
+    private void ZRot() {
         dots = calculateRotateZ(dots, zRotate.getValue());
         draw(dots);
     }
 
     @FXML
-    private void Scale () {
+    private void Scale() {
         dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
         draw(dots);
     }
 
     @FXML
-    private void ReflectXY () {
+    private void ReflectXY() {
         dots = calculateReflectionXY(dots);
         draw(dots);
     }
 
     @FXML
-    private void ReflectYZ () {
+    private void ReflectYZ() {
         dots = calculateReflectionYZ(dots);
         draw(dots);
     }
 
     @FXML
-    private void ReflectZX () {
+    private void ReflectZX() {
         dots = calculateReflectionZX(dots);
         draw(dots);
     }
 
     @FXML
-    private void Trans () {
-        dots = calculateTransfer(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue());
+    private void Trans() {
+        if (UsePoint.isSelected()) {
+            dots = calculateScaleByDot(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue(),
+                    Double.parseDouble(XPoint.getText()), Double.parseDouble(YPoint.getText()),
+                    Double.parseDouble(ZPoint.getText()));
+        } else {
+            dots = calculateTransfer(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue());
+        }
         draw(dots);
     }
 
-    private void draw (double dots[][]){
+    private void draw(double dots[][]) {
         Group group = new Group();
         for (int i = 0; i < dots.length - 1; i++) {
             Line lineD = new Line();
