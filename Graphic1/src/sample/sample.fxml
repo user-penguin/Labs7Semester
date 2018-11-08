@@ -9,23 +9,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="326.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+<AnchorPane prefHeight="600.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
-    <Pane fx:id="controlePane" layoutX="0.0" layoutY="-3.0" prefHeight="600.0" prefWidth="326.0" style="-fx-background-color: gold">
+    <Pane fx:id="controlePane" layoutY="-3.0" prefHeight="600.0" prefWidth="326.0" style="-fx-background-color: gold">
       <children>
         <Button fx:id="startButton" layoutX="146.0" layoutY="561.0" mnemonicParsing="false" onAction="#start" text="Начать" />
         <Button layoutX="253.0" layoutY="46.0" mnemonicParsing="false" onAction="#YRot" text="Ok" />
         <Button layoutX="253.0" layoutY="85.0" mnemonicParsing="false" onAction="#ZRot" text="Ok" />
-        <Button layoutX="255.0" layoutY="212.0" mnemonicParsing="false" onAction="#Scale" text="Ok" />
-        <Button layoutX="251.0" layoutY="340.0" mnemonicParsing="false" onAction="#Trans" text="Ok" />
+        <Button layoutX="253.0" layoutY="254.0" mnemonicParsing="false" onAction="#Scale" text="Ok" />
+        <Button layoutX="251.0" layoutY="374.0" mnemonicParsing="false" onAction="#Trans" text="Ok" />
         <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" onAction="#XRot" text="Ok" />
-        <Slider fx:id="xRotate" layoutX="21.0" layoutY="16.0" max="359.0" prefWidth="176.0" />
+        <Slider layoutX="21.0" layoutY="16.0" max="359.0" prefWidth="176.0" fx:id="xRotate" />
         <Label layoutX="74.0" layoutY="31.0" prefHeight="17.1328125" prefWidth="71.0" text="X rotate" textAlignment="CENTER" />
         <Slider fx:id="yRotate" layoutX="21.0" layoutY="56.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="74.0" layoutY="71.0" prefHeight="17.1328125" prefWidth="71.0" text="Y rotate" textAlignment="CENTER" />
         <Slider fx:id="zRotate" layoutX="20.0" layoutY="93.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="73.0" layoutY="108.0" prefHeight="17.1328125" prefWidth="71.0" text="Z rotate" textAlignment="CENTER" />
-        <Label fx:id="xRotateLabel" layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}" />
+        <Label layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}" fx:id="xRotateLabel" />
         <Label fx:id="yRotateLabel" layoutX="208.0" layoutY="48.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${yRotate.value}" />
         <Label fx:id="zRotateLabel" layoutX="208.0" layoutY="87.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${zRotate.value}" />
         <Label fx:id="XScaleLabel" layoutX="210.0" layoutY="136.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XScale.value}" />
@@ -37,19 +37,26 @@
         <Slider fx:id="ZScale" layoutX="22.0" layoutY="218.0" max="2.0" min="0.001" prefWidth="176.0" value="1.0" />
         <Label layoutX="75.0" layoutY="233.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Scale" textAlignment="CENTER" />
         <Label fx:id="ZScaleLabel" layoutX="210.0" layoutY="212.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${ZScale.value}" />
-        <Label fx:id="ZTransLabel" layoutX="208.0" layoutY="342.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${ZTrans.value}" />
-        <Label layoutX="73.0" layoutY="363.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Transfer" textAlignment="CENTER" />
-        <Slider fx:id="ZTrans" layoutX="20.0" layoutY="348.0" max="50.0" min="-50.0" prefWidth="176.0" />
-        <Label fx:id="YTransLabel" layoutX="208.0" layoutY="304.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${YTrans.value}" />
-        <Label layoutX="73.0" layoutY="325.0" prefHeight="17.1328125" prefWidth="71.0" text="Y Transfer" textAlignment="CENTER" />
-        <Slider fx:id="YTrans" layoutX="20.0" layoutY="310.0" max="50.0" min="-50.0" prefWidth="176.0" />
-        <Slider fx:id="XTrans" layoutX="20.0" layoutY="272.0" max="50.0" min="-50.0" prefWidth="176.0" />
-        <Label layoutX="73.0" layoutY="287.0" prefHeight="17.1328125" prefWidth="71.0" text="X Transfer" textAlignment="CENTER" />
-        <Label fx:id="XTransLabel" layoutX="208.0" layoutY="266.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XTrans.value}" />
-        <Button layoutX="108.0" layoutY="425.0" mnemonicParsing="false" onAction="#ReflectXY" text="XY" />
-        <Button layoutX="163.0" layoutY="425.0" mnemonicParsing="false" onAction="#ReflectYZ" text="YZ" />
-        <Button layoutX="215.0" layoutY="425.0" mnemonicParsing="false" onAction="#ReflectZX" text="ZX" />
-        <Label layoutX="131.0" layoutY="393.0" text="Reflect on axis" />
+        <Label fx:id="ZTransLabel" layoutX="208.0" layoutY="376.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${ZTrans.value}" />
+        <Label layoutX="73.0" layoutY="397.0" prefHeight="17.1328125" prefWidth="71.0" text="Z Transfer" textAlignment="CENTER" />
+        <Slider fx:id="ZTrans" layoutX="20.0" layoutY="382.0" max="50.0" min="-50.0" prefWidth="176.0" />
+        <Label fx:id="YTransLabel" layoutX="208.0" layoutY="338.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${YTrans.value}" />
+        <Label layoutX="73.0" layoutY="359.0" prefHeight="17.1328125" prefWidth="71.0" text="Y Transfer" textAlignment="CENTER" />
+        <Slider fx:id="YTrans" layoutX="20.0" layoutY="344.0" max="50.0" min="-50.0" prefWidth="176.0" />
+        <Slider fx:id="XTrans" layoutX="20.0" layoutY="306.0" max="50.0" min="-50.0" prefWidth="176.0" />
+        <Label layoutX="73.0" layoutY="321.0" prefHeight="17.1328125" prefWidth="71.0" text="X Transfer" textAlignment="CENTER" />
+        <Label fx:id="XTransLabel" layoutX="208.0" layoutY="300.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XTrans.value}" />
+        <Button layoutX="108.0" layoutY="459.0" mnemonicParsing="false" onAction="#ReflectXY" text="XY" />
+        <Button layoutX="163.0" layoutY="459.0" mnemonicParsing="false" onAction="#ReflectYZ" text="YZ" />
+        <Button layoutX="215.0" layoutY="459.0" mnemonicParsing="false" onAction="#ReflectZX" text="ZX" />
+        <Label layoutX="131.0" layoutY="427.0" text="Reflect on axis" />
+            <CheckBox fx:id="UsePoint" layoutX="29.0" layoutY="258.0" mnemonicParsing="false" />
+            <TextField fx:id="XPoint" layoutX="78.0" layoutY="254.0" prefHeight="25.0" prefWidth="40.0" />
+            <TextField fx:id="Ypoint" layoutX="143.0" layoutY="254.0" prefHeight="25.0" prefWidth="40.0" />
+            <TextField fx:id="ZPoint" layoutX="208.0" layoutY="254.0" prefHeight="25.0" prefWidth="40.0" />
+            <Label layoutX="64.0" layoutY="260.0" text="X" />
+            <Label layoutX="127.0" layoutY="259.0" text="Y" />
+            <Label layoutX="191.0" layoutY="260.0" text="Z" />
       </children>
     </Pane>
   </children>
