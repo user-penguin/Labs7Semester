@@ -87,7 +87,7 @@ public class Controller {
     private void Scale() {
         // масштабируем относительно точки или нет
         if (UsePoint.isSelected()) {
-            dots = calculateScaleByDot(dots, XTrans.getValue(), YTrans.getValue(), ZTrans.getValue(),
+            dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
                     Double.parseDouble(XPoint.getText()), Double.parseDouble(YPoint.getText()),
                     Double.parseDouble(ZPoint.getText()));
         } else {
