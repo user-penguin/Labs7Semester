@@ -28,7 +28,7 @@ public class MathMatrix {
         for (int i = 0; i < a.length; i++) {
             double sum = 0;
             for (int j = 0; j < a.length; j++) {
-                sum += a[j] * b[i][j];
+                sum += a[j] * b[j][i];
             }
             matrix[i] = sum;
         }

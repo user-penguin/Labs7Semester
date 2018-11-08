@@ -29,6 +29,7 @@ public class Dots {
             {0, 11, 11, 1},
             {2, 11, 11, 1}
     };
+
     // координаты трёхмерной буквы K
     public static final double[][] dotsK = {
             {0,  0,  0, 1},
