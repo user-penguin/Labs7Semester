@@ -50,12 +50,9 @@
         <Button layoutX="215.0" layoutY="459.0" mnemonicParsing="false" onAction="#ReflectZX" text="ZX" />
         <Label layoutX="131.0" layoutY="427.0" text="Reflect on axis" />
             <CheckBox fx:id="UsePoint" layoutX="29.0" layoutY="258.0" mnemonicParsing="false" />
-            <TextField fx:id="XPoint" layoutX="78.0" layoutY="254.0" prefHeight="25.0" prefWidth="40.0" text="0" />
-            <TextField fx:id="Ypoint" layoutX="143.0" layoutY="254.0" prefHeight="25.0" prefWidth="40.0" text="0" />
-            <TextField fx:id="ZPoint" layoutX="208.0" layoutY="254.0" prefHeight="25.0" prefWidth="40.0" text="0" />
-            <Label layoutX="64.0" layoutY="260.0" text="X" />
-            <Label layoutX="127.0" layoutY="259.0" text="Y" />
-            <Label layoutX="191.0" layoutY="260.0" text="Z" />
+            <TextField fx:id="XPoint" layoutX="50.0" layoutY="254.0" prefHeight="26.0" prefWidth="60.0" promptText="X" />
+            <TextField fx:id="Ypoint" layoutX="113.0" layoutY="254.0" prefHeight="26.0" prefWidth="60.0" promptText="Y" />
+            <TextField fx:id="ZPoint" layoutX="178.0" layoutY="254.0" prefHeight="26.0" prefWidth="60.0" promptText="Z" />
       </children>
     </Pane>
   </children>
