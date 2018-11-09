@@ -61,9 +61,9 @@ public class Controller {
 
     @FXML
     private void start() {
-        dots = calculateScale(Dots.dotsfix, 20, 20, 20);
+        dots = calculateScale(Dots.dotsK, 20, 20, 20);
         dots = calculateTransfer(dots, 200, 250, 0);
-        //dots = calculateRotateZ(dots, -90);
+        dots = calculateRotateZ(dots, -90);
         draw(dots);
     }
 
