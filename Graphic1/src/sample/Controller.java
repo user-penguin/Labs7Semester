@@ -102,6 +102,7 @@ public class Controller {
             }
             while(Math.abs(dots[0][0]-stock[0][0])>5)
             {
+                int x;
                 dots = calculateScaleByDot(dots, 0.99, YScale.getValue(), ZScale.getValue(),
                         Double.parseDouble(XPoint.getText())+200,
                         Double.parseDouble(YPoint.getText())+250,
