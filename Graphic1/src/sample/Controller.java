@@ -1,6 +1,7 @@
 package sample;
 
 import compute.Dots;
+import compute.MathMatrix;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.scene.control.Slider;
+import transform.DefaultTransform;
 import transform.TransformLib;
 
 import static transform.TransformLib.*;
@@ -125,6 +127,7 @@ public class Controller {
 
     private void draw(double dots[][]) {
         Group group = new Group();
+        dots = MathMatrix.multiple(dots, DefaultTransform.getOfficceMatrix());
         for (int i = 0; i < dots.length - 1; i++) {
             Line lineD = new Line();
             lineD.setStartX(dots[i][0]);

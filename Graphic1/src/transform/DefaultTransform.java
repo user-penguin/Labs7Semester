@@ -3,6 +3,7 @@ package transform;
 public class DefaultTransform {
 
     public static final int SIZE = 4;
+    public static final double a = 0.5 * Math.cos(Math.PI/4);
 
     // получить матрицу вращения вокруг оси абсцисс на угол phi
     public static double[][] getRotateMatrixX (double phi) {
@@ -88,6 +89,17 @@ public class DefaultTransform {
                 {  0,   1,   0 ,0},
                 {  0,   0,   1, 0},
                 {xTr, yTr, zTr, 1}
+        };
+        return matrix;
+    }
+
+    // кабинетная проекция
+    public static double[][] getOfficceMatrix () {
+        double[][] matrix = {
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {a, a, 0, 0},
+                {0, 0, 0, 1}
         };
         return matrix;
     }
