@@ -15,10 +15,20 @@ public class TransformLib {
 
     // Расятнуть x,y,z
     public static double[][] calculateScale(double[][] stock, double xS, double yS, double zS) {
+        // переместить к началу координат
+        double middleX = calculateMiddleX(stock);
+        double middleY = calculateMiddleY(stock);
+        double middleZ = calculateMiddleZ(stock);
+        // передвинутая на начало координат матрица
+        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
+
+        // делаем растяжение
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getScaleMatrix(xS, yS, zS));
+            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getScaleMatrix(xS, yS, zS));
         }
+
+        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
@@ -106,6 +116,7 @@ public class TransformLib {
         return dots;
     }
 
+    /** Инструменты для центрирования перд другими действиями */
     // подпрограмма расчёта минимальной заданной координаты
     private static double calculateMin (double dots[][], int coordinate) {
         double min = dots[0][coordinate];

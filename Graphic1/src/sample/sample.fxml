@@ -18,13 +18,13 @@
         <Button layoutX="253.0" layoutY="254.0" mnemonicParsing="false" onAction="#Scale" text="Ok" />
         <Button layoutX="251.0" layoutY="374.0" mnemonicParsing="false" onAction="#Trans" text="Ok" />
         <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" onAction="#XRot" text="Ok" />
-        <Slider layoutX="21.0" layoutY="16.0" max="359.0" prefWidth="176.0" fx:id="xRotate" />
+        <Slider fx:id="xRotate" layoutX="21.0" layoutY="16.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="74.0" layoutY="31.0" prefHeight="17.1328125" prefWidth="71.0" text="X rotate" textAlignment="CENTER" />
         <Slider fx:id="yRotate" layoutX="21.0" layoutY="56.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="74.0" layoutY="71.0" prefHeight="17.1328125" prefWidth="71.0" text="Y rotate" textAlignment="CENTER" />
         <Slider fx:id="zRotate" layoutX="20.0" layoutY="93.0" max="359.0" prefWidth="176.0" />
         <Label layoutX="73.0" layoutY="108.0" prefHeight="17.1328125" prefWidth="71.0" text="Z rotate" textAlignment="CENTER" />
-        <Label layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}" fx:id="xRotateLabel" />
+        <Label fx:id="xRotateLabel" layoutX="208.0" layoutY="14.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${xRotate.value}" />
         <Label fx:id="yRotateLabel" layoutX="208.0" layoutY="48.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${yRotate.value}" />
         <Label fx:id="zRotateLabel" layoutX="208.0" layoutY="87.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${zRotate.value}" />
         <Label fx:id="XScaleLabel" layoutX="210.0" layoutY="136.0" prefHeight="20.1328125" prefWidth="40.0" style="-fx-background-color: white" text="${XScale.value}" />
