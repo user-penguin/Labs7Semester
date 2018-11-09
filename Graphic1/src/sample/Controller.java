@@ -64,13 +64,7 @@ public class Controller {
     @FXML
     private void start() {
         dots = calculateScale(Dots.dotsK, 20, 20, 20);
-        dots = calculateTransfer(dots, 200, 250, 0);
         dots = calculateRotateZ(dots, -90);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         draw(dots);
     }
 
@@ -135,10 +129,10 @@ public class Controller {
         dots = MathMatrix.multiple(dots, DefaultTransform.getOfficceMatrix());
         for (int i = 0; i < dots.length - 1; i++) {
             Line lineD = new Line();
-            lineD.setStartX(dots[i][0]);
-            lineD.setStartY(dots[i][1]);
-            lineD.setEndX(dots[i + 1][0]);
-            lineD.setEndY(dots[i + 1][1]);
+            lineD.setStartX(dots[i][0]+200);
+            lineD.setStartY(dots[i][1]+250);
+            lineD.setEndX(dots[i + 1][0]+200);
+            lineD.setEndY(dots[i + 1][1]+250);
             lineD.setStrokeWidth(3);
             lineD.setStroke(Color.PINK);
             group.getChildren().addAll(lineD);
