@@ -61,6 +61,8 @@ public class Controller {
 
     private double dots[][];
 
+
+
     @FXML
     private void start() {
         dots = calculateScale(Dots.dotsfix, 20, 20, 20);
@@ -91,15 +93,41 @@ public class Controller {
     private void Scale() {
         // масштабируем относительно точки или нет
         if (UsePoint.isSelected()) {
+            // старые точки
+            double stock[][] = dots;
             dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
-                    Double.parseDouble(XPoint.getText()) + 200,
-                    Double.parseDouble(YPoint.getText()) + 250,
+                    Double.parseDouble(XPoint.getText())+200,
+                    Double.parseDouble(YPoint.getText())+250,
                     Double.parseDouble(ZPoint.getText()));
+            draw(dots);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            double dX = 5, dY = 5, dZ = 5;
+            double E = 0.005;
+
+            while (Math.abs(dX) > E || Math.abs(dY) > E || Math.abs(dZ) > E)
+            {
+
+                dots = calculateScaleByDot(dots, 0.99, YScale.getValue(), ZScale.getValue(),
+                        Double.parseDouble(XPoint.getText())+200,
+                        Double.parseDouble(YPoint.getText())+250,
+                        Double.parseDouble(ZPoint.getText()));
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
         }
         draw(dots);
     }
+
 
     @FXML
     private void ReflectXY() {
