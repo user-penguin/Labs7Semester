@@ -135,6 +135,32 @@ public class Controller {
             lineD.setStroke(Color.PINK);
             group.getChildren().addAll(lineD);
         }
+        Line lineX= new Line();
+        lineX.setStartX(200);
+        lineX.setStartY(250);
+        lineX.setEndX(400);
+        lineX.setEndY(250);
+        lineX.setStrokeWidth(1);
+        lineX.setStroke(Color.BLACK);
+        group.getChildren().addAll(lineX);
+
+        Line lineY= new Line();
+        lineY.setStartX(200);
+        lineY.setStartY(250);
+        lineY.setEndX(200);
+        lineY.setEndY(450);
+        lineY.setStrokeWidth(1);
+        lineY.setStroke(Color.BLACK);
+        group.getChildren().addAll(lineY);
+
+        Line lineZ= new Line();
+        lineZ.setStartX(200);
+        lineZ.setStartY(250);
+        lineZ.setEndX(350);
+        lineZ.setEndY(100);
+        lineZ.setStrokeWidth(1);
+        lineZ.setStroke(Color.BLACK);
+        group.getChildren().addAll(lineZ);
         scene = new Scene(group, 800, 600, true);
         stage.setScene(scene);
         stage.show();
