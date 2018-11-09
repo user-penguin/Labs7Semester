@@ -111,17 +111,29 @@ public class Controller {
 
             while (Math.abs(dX) > E || Math.abs(dY) > E || Math.abs(dZ) > E)
             {
-
-                dots = calculateScaleByDot(dots, 0.99, YScale.getValue(), ZScale.getValue(),
-                        Double.parseDouble(XPoint.getText())+200,
-                        Double.parseDouble(YPoint.getText())+250,
-                        Double.parseDouble(ZPoint.getText()));
+                double dXmax = -1;
+                double dYmax = -1;
+                double dZmax = -1;
+                for (int i = 0; i < stock.length; i++) {
+                    dots[i][0] = (dots[i][0] - stock[i][0]) / 2 + Double.parseDouble(XPoint.getText()) + 200;
+                    dots[i][1] = (dots[i][1] - stock[i][1]) / 2 + Double.parseDouble(YPoint.getText()) + 250;
+                    dots[i][2] = (dots[i][2] - stock[i][2]) / 2 + Double.parseDouble(ZPoint.getText());
+                    if (Math.abs(dots[i][0] - stock[i][0]) > dXmax) { dXmax =  Math.abs(dots[i][0] - stock[i][0]); }
+                    if (Math.abs(dots[i][1] - stock[i][1]) > dYmax) { dYmax =  Math.abs(dots[i][1] - stock[i][1]); }
+                    if (Math.abs(dots[i][2] - stock[i][2]) > dZmax) { dZmax =  Math.abs(dots[i][2] - stock[i][2]); }
+                }
+                dX = dXmax;
+                dY = dYmax;
+                dZ = dZmax;
+                draw(dots);
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            draw(stock);
+            dots = stock;
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
         }
