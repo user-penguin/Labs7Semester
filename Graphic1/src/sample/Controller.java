@@ -90,10 +90,17 @@ public class Controller {
     private void Scale() {
         // масштабируем относительно точки или нет
         if (UsePoint.isSelected()) {
+            double stock[][] = dots;
             dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
-                    Double.parseDouble(XPoint.getText()),
-                    Double.parseDouble(YPoint.getText()),
+                    Double.parseDouble(XPoint.getText())+200,
+                    Double.parseDouble(YPoint.getText())+250,
                     Double.parseDouble(ZPoint.getText()));
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //while(dots[0][0])
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
         }
@@ -158,7 +165,7 @@ public class Controller {
         Line lineZ= new Line();
         lineZ.setStartX(200);
         lineZ.setStartY(250);
-        lineZ.setEndX(350);
+        lineZ.setEndX(50);
         lineZ.setEndY(100);
         lineZ.setStrokeWidth(1);
         lineZ.setStroke(Color.BLACK);
