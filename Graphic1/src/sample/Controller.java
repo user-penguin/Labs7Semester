@@ -164,15 +164,15 @@ public class Controller {
         draw(dots);
     }
 
-    private void draw(double dots[][]) {
+    private void draw(double dotsToDraw[][]) {
         Group group = new Group();
-        dots = MathMatrix.multiple(dots, DefaultTransform.getOfficceMatrix());
-        for (int i = 0; i < dots.length - 1; i++) {
+        dotsToDraw = MathMatrix.multiple(dotsToDraw, DefaultTransform.getOfficceMatrix());
+        for (int i = 0; i < dotsToDraw.length - 1; i++) {
             Line lineD = new Line();
-            lineD.setStartX(dots[i][0]+200);
-            lineD.setStartY(dots[i][1]+250);
-            lineD.setEndX(dots[i + 1][0]+200);
-            lineD.setEndY(dots[i + 1][1]+250);
+            lineD.setStartX(dotsToDraw[i][0]+200);
+            lineD.setStartY(dotsToDraw[i][1]+250);
+            lineD.setEndX(dotsToDraw[i + 1][0]+200);
+            lineD.setEndY(dotsToDraw[i + 1][1]+250);
             lineD.setStrokeWidth(3);
             lineD.setStroke(Color.PINK);
             group.getChildren().addAll(lineD);
