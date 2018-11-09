@@ -63,7 +63,7 @@ public class Controller {
 
     @FXML
     private void start() {
-        dots = calculateScale(Dots.dotsK, 20, 20, 20);
+        dots = calculateScale(Dots.dotsfix, 20, 20, 20);
         dots = calculateTransfer(dots, 200, 250, 0);
         dots = calculateRotateZ(dots, -90);
         draw(dots);
@@ -92,8 +92,8 @@ public class Controller {
         // масштабируем относительно точки или нет
         if (UsePoint.isSelected()) {
             dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
-                    Double.parseDouble(XPoint.getText()),
-                    Double.parseDouble(YPoint.getText()),
+                    Double.parseDouble(XPoint.getText()) + 200,
+                    Double.parseDouble(YPoint.getText()) + 250,
                     Double.parseDouble(ZPoint.getText()));
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());

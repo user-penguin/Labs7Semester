@@ -14,6 +14,16 @@ public class TransformLib {
     }
 
     // Расятнуть x,y,z
+    public static double[][] calculateScaleByDot(double[][] stock, double xS, double yS, double zS) {
+        // делаем растяжение
+        double[][] dots = new double[stock.length][];
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getScaleMatrix(xS, yS, zS));
+        }
+        return dots;
+    }
+
+    // Расятнуть x,y,z
     public static double[][] calculateScale(double[][] stock, double xS, double yS, double zS) {
         // переместить к началу координат
         double middleX = calculateMiddleX(stock);
@@ -38,10 +48,8 @@ public class TransformLib {
         for (int i = 0; i < stock.length; i++) {
             dots[i] = new double[]{stock[i][0] - x0, stock[i][1] - y0, stock[i][2] - z0, 1};
         }
-
         // растягиваем фигуру
-        dots = calculateScale(dots, xS, yS, zS);
-
+        dots = calculateScaleByDot(dots, xS, yS, zS);
         //возвращаем координаты на место
         for (int i = 0; i < stock.length; i++) {
             dots[i][0] += x0;
