@@ -92,27 +92,29 @@ public class Controller {
         if (UsePoint.isSelected()) {
             double stock[][] = dots;
             dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
-                    Double.parseDouble(XPoint.getText())+200,
-                    Double.parseDouble(YPoint.getText())+250,
+                    Double.parseDouble(XPoint.getText()) + 200,
+                    Double.parseDouble(YPoint.getText()) + 250,
                     Double.parseDouble(ZPoint.getText()));
+            draw(dots);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            while(Math.abs(dots[0][0]-stock[0][0])>5)
-            {
-                int x;
+            while (Math.abs(dots[0][0] - stock[0][0]) > 5) {
+
                 dots = calculateScaleByDot(dots, 0.99, YScale.getValue(), ZScale.getValue(),
-                        Double.parseDouble(XPoint.getText())+200,
-                        Double.parseDouble(YPoint.getText())+250,
+                        Double.parseDouble(XPoint.getText()) + 200,
+                        Double.parseDouble(YPoint.getText()) + 250,
                         Double.parseDouble(ZPoint.getText()));
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            draw(stock);
+            dots = stock;
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
         }
@@ -148,15 +150,15 @@ public class Controller {
         dots = MathMatrix.multiple(dots, DefaultTransform.getOfficceMatrix());
         for (int i = 0; i < dots.length - 1; i++) {
             Line lineD = new Line();
-            lineD.setStartX(dots[i][0]+200);
-            lineD.setStartY(dots[i][1]+250);
-            lineD.setEndX(dots[i + 1][0]+200);
-            lineD.setEndY(dots[i + 1][1]+250);
+            lineD.setStartX(dots[i][0] + 200);
+            lineD.setStartY(dots[i][1] + 250);
+            lineD.setEndX(dots[i + 1][0] + 200);
+            lineD.setEndY(dots[i + 1][1] + 250);
             lineD.setStrokeWidth(3);
             lineD.setStroke(Color.PINK);
             group.getChildren().addAll(lineD);
         }
-        Line lineX= new Line();
+        Line lineX = new Line();
         lineX.setStartX(200);
         lineX.setStartY(250);
         lineX.setEndX(400);
@@ -165,7 +167,7 @@ public class Controller {
         lineX.setStroke(Color.BLACK);
         group.getChildren().addAll(lineX);
 
-        Line lineY= new Line();
+        Line lineY = new Line();
         lineY.setStartX(200);
         lineY.setStartY(250);
         lineY.setEndX(200);
@@ -174,7 +176,7 @@ public class Controller {
         lineY.setStroke(Color.BLACK);
         group.getChildren().addAll(lineY);
 
-        Line lineZ= new Line();
+        Line lineZ = new Line();
         lineZ.setStartX(200);
         lineZ.setStartY(250);
         lineZ.setEndX(50);
