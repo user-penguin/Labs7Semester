@@ -108,46 +108,29 @@ public class TransformLib {
 
     // отобразить относительно XY
     public static double[][] calculateReflectionXY(double[][] stock) {
-        double middleX = calculateMiddleX(stock);
-        double middleY = calculateMiddleY(stock);
-        double middleZ = calculateMiddleZ(stock);
-        // передвинутая на начало координат матрица
-        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
         double[][] dots = new double[stock.length][];
-        for (int i = 0; i < transferMatrix.length; i++) {
-            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getMirrorXYMatrix());
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getMirrorXYMatrix());
         }
-        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
     // отобразить относительно YZ
     public static double[][] calculateReflectionYZ(double[][] stock) {
-        double middleX = calculateMiddleX(stock);
-        double middleY = calculateMiddleY(stock);
-        double middleZ = calculateMiddleZ(stock);
-        // передвинутая на начало координат матрица
-        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
         double[][] dots = new double[stock.length][];
-        for (int i = 0; i < transferMatrix.length; i++) {
-            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getMirrorYZMatrix());
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getMirrorYZMatrix());
         }
-        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
     // отобразить относительно ZX
     public static double[][] calculateReflectionZX(double[][] stock) {
-        double middleX = calculateMiddleX(stock);
-        double middleY = calculateMiddleY(stock);
-        double middleZ = calculateMiddleZ(stock);
-        // передвинутая на начало координат матрица
-        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
+
         double[][] dots = new double[stock.length][];
-        for (int i = 0; i < transferMatrix.length; i++) {
-            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getMirrorZXMatrix());
+        for (int i = 0; i < stock.length; i++) {
+            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getMirrorZXMatrix());
         }
-        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
