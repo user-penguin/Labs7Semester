@@ -53,29 +53,48 @@ public class TransformLib {
 
     // повернуть x
     public static double[][] calculateRotateX(double[][] stock, double angle) {
+        double middleX = calculateMiddleX(stock);
+        double middleY = calculateMiddleY(stock);
+        double middleZ = calculateMiddleZ(stock);
+        // передвинутая на начало координат матрица
+        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
 
         double[][] dots = new double[stock.length][];
-        for (int i = 0; i < stock.length; i++) {
-            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixX(Math.PI*angle/180));
+        for (int i = 0; i < transferMatrix.length; i++) {
+            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getRotateMatrixX(Math.PI*angle/180));
         }
+
+        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
     // повернуть y
     public static double[][] calculateRotateY(double[][] stock, double angle) {
+        double middleX = calculateMiddleX(stock);
+        double middleY = calculateMiddleY(stock);
+        double middleZ = calculateMiddleZ(stock);
+        // передвинутая на начало координат матрица
+        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixY(Math.PI*angle/180));
+            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getRotateMatrixY(Math.PI*angle/180));
         }
+        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
     // повернуть z
     public static double[][] calculateRotateZ(double[][] stock, double angle) {
+        double middleX = calculateMiddleX(stock);
+        double middleY = calculateMiddleY(stock);
+        double middleZ = calculateMiddleZ(stock);
+        // передвинутая на начало координат матрица
+        double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
-            dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixZ(Math.PI*angle/180));
+            dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getRotateMatrixZ(Math.PI*angle/180));
         }
+        dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
 
