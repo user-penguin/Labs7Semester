@@ -21,13 +21,11 @@ public class TransformLib {
         double middleZ = calculateMiddleZ(stock);
         // передвинутая на начало координат матрица
         double transferMatrix[][] = calculateTransfer(stock, -middleX, -middleY, -middleZ);
-
         // делаем растяжение
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
             dots[i] = MathMatrix.multiple(transferMatrix[i], DefaultTransform.getScaleMatrix(xS, yS, zS));
         }
-
         dots = calculateTransfer(dots, middleX, middleY, middleZ);
         return dots;
     }
@@ -55,6 +53,7 @@ public class TransformLib {
 
     // повернуть x
     public static double[][] calculateRotateX(double[][] stock, double angle) {
+
         double[][] dots = new double[stock.length][];
         for (int i = 0; i < stock.length; i++) {
             dots[i] = MathMatrix.multiple(stock[i], DefaultTransform.getRotateMatrixX(Math.PI*angle/180));
