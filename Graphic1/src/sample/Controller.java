@@ -66,6 +66,11 @@ public class Controller {
         dots = calculateScale(Dots.dotsK, 20, 20, 20);
         dots = calculateTransfer(dots, 200, 250, 0);
         dots = calculateRotateZ(dots, -90);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         draw(dots);
     }
 
