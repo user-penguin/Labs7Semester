@@ -10,7 +10,6 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
-
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-
 public class Controller {
+
     @FXML
     private Canvas canvas;
 
@@ -47,7 +46,7 @@ public class Controller {
     void initialize()
     {
         try {
-            img = ImageIO.read(new File("p.jpg"));
+            img = ImageIO.read(new File("/home/dmitry/Documents/Labs7Semester/Raster/src/p.jpg"));
             width = img.getWidth();
             height = img.getHeight();
         } catch (IOException e) {
@@ -63,7 +62,7 @@ public class Controller {
     private void LoadImage()
     {
         try {
-            img = ImageIO.read(new File("p.jpg"));
+            img = ImageIO.read(new File("/home/dmitry/Documents/Labs7Semester/Raster/src/p.jpg"));
             width = img.getWidth();
             height = img.getHeight();
             arr = new ColorRGB[width][height];

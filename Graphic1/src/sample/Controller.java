@@ -2,6 +2,8 @@ package sample;
 
 import compute.Dots;
 import compute.MathMatrix;
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,6 +15,13 @@ import javafx.stage.Stage;
 import javafx.scene.control.Slider;
 import transform.DefaultTransform;
 import transform.TransformLib;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
+
 
 import static transform.TransformLib.*;
 
@@ -61,7 +70,9 @@ public class Controller {
 
     private double dots[][];
 
+    private double[][] stock;
 
+    double dCoordinate;
 
     @FXML
     private void start() {
@@ -88,28 +99,32 @@ public class Controller {
         draw(dots);
     }
 
+
+
+
     @FXML
-    private void Scale() {
+    private void Scale() throws InterruptedException {
         // масштабируем относительно точки или нет
         if (UsePoint.isSelected()) {
+            System.out.println("Чекбокс выбран");
             // старые точки
-            double stock[][] = dots;
+            stock = dots;
             dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
-                    Double.parseDouble(XPoint.getText())+200,
-                    Double.parseDouble(YPoint.getText())+250,
+                    Double.parseDouble(XPoint.getText()) + 200,
+                    Double.parseDouble(YPoint.getText()) + 250,
                     Double.parseDouble(ZPoint.getText()));
             draw(dots);
-            try {
-                java.util.concurrent.TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
-            double dX = 5, dY = 5, dZ = 5;
+            dCoordinate = 5;
             double E = 0.005;
 
-            while (Math.abs(dX) > E || Math.abs(dY) > E || Math.abs(dZ) > E)
+            while (Math.abs(dCoordinate) > E)
             {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 double dXmax = -1;
                 double dYmax = -1;
                 double dZmax = -1;
@@ -121,17 +136,12 @@ public class Controller {
                     if (Math.abs(dots[i][1] - stock[i][1]) > dYmax) { dYmax =  Math.abs(dots[i][1] - stock[i][1]); }
                     if (Math.abs(dots[i][2] - stock[i][2]) > dZmax) { dZmax =  Math.abs(dots[i][2] - stock[i][2]); }
                 }
-                dX = dXmax;
-                dY = dYmax;
-                dZ = dZmax;
+                dCoordinate = Math.max(dXmax, Math.max(dYmax, dZmax));
+                System.out.println("Я в вайле");
                 draw(dots);
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
-            draw(stock);
+
+           draw(stock);
             dots = stock;
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
@@ -164,19 +174,56 @@ public class Controller {
         draw(dots);
     }
 
+    @FXML
     private void draw(double dotsToDraw[][]) {
+        JFrame testFrame = new JFrame();
+        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final LinesComponent comp = new LinesComponent();
+        comp.setPreferredSize(new Dimension(320, 200));
+        testFrame.getContentPane().add(comp, BorderLayout.CENTER);
+        JPanel buttonsPanel = new JPanel();
+
+        testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+
+        newLineButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int x1 = (int) (Math.random()*320);
+                int x2 = (int) (Math.random()*320);
+                int y1 = (int) (Math.random()*200);
+                int y2 = (int) (Math.random()*200);
+                Color randomColor = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
+                comp.addLine(x1, y1, x2, y2, randomColor);
+            }
+        });
+
+
+        clearButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comp.clearLines();
+            }
+        });
+        testFrame.pack();
+        testFrame.setVisible(true);
+
+
+
         Group group = new Group();
-        dotsToDraw = MathMatrix.multiple(dotsToDraw, DefaultTransform.getOfficceMatrix());
-        for (int i = 0; i < dotsToDraw.length - 1; i++) {
+
+        double[][] transformsDots = MathMatrix.multiple(dotsToDraw, DefaultTransform.getOfficceMatrix());
+        for (int i = 0; i < transformsDots.length - 1; i++) {
             Line lineD = new Line();
-            lineD.setStartX(dotsToDraw[i][0]+200);
-            lineD.setStartY(dotsToDraw[i][1]+250);
-            lineD.setEndX(dotsToDraw[i + 1][0]+200);
-            lineD.setEndY(dotsToDraw[i + 1][1]+250);
+            lineD.setStartX(transformsDots[i][0] + 200);
+            lineD.setStartY(transformsDots[i][1] + 250);
+            lineD.setEndX(transformsDots[i + 1][0] + 200);
+            lineD.setEndY(transformsDots[i + 1][1] + 250);
             lineD.setStrokeWidth(3);
             lineD.setStroke(Color.PINK);
             group.getChildren().addAll(lineD);
         }
+
         Line lineX= new Line();
         lineX.setStartX(200);
         lineX.setStartY(250);
@@ -203,6 +250,7 @@ public class Controller {
         lineZ.setStrokeWidth(1);
         lineZ.setStroke(Color.BLACK);
         group.getChildren().addAll(lineZ);
+
         scene = new Scene(group, 800, 600, true);
         stage.setScene(scene);
         stage.show();
