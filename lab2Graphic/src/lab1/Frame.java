@@ -24,7 +24,7 @@ public class Frame extends JFrame implements ActionListener, MouseWheelListener 
 	protected Main parent = null;
 	
 	public Frame() {
-		super("Компьютерная графика - Лабораторная работа #1");
+		super("");
 		this.setResizable(false);
 		this.setLayout(null);
 		
@@ -43,15 +43,15 @@ public class Frame extends JFrame implements ActionListener, MouseWheelListener 
 		scene.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		this.add(scene);
 		
-		JLabel planel = new JLabel("Проекция на плоскость:");
-		planel.setBounds(540, 10, 200, 20);
-		this.add(planel);
-		
-		ButtonGroup plane = new ButtonGroup();
-		addRadioButton("YZ", "planeYZ", plane, 540, 30, 40, 20, true);
-		addRadioButton("XZ", "planeXZ", plane, 590, 30, 45, 20, false);
-		addRadioButton("XY", "planeXY", plane, 640, 30, 40, 20, false);
-		addRadioButton("Кабинетная", "planeCAB", plane, 540, 50, 100, 20, false);
+//		JLabel planel = new JLabel("Проекция на плоскость:");
+//		planel.setBounds(540, 10, 200, 20);
+//		this.add(planel);
+//
+//		ButtonGroup plane = new ButtonGroup();
+//		addRadioButton("YZ", "planeYZ", plane, 540, 30, 40, 20, true);
+//		addRadioButton("XZ", "planeXZ", plane, 590, 30, 45, 20, false);
+//		addRadioButton("XY", "planeXY", plane, 640, 30, 40, 20, false);
+//		addRadioButton("Кабинетная", "planeCAB", plane, 540, 50, 100, 20, false);
 		
 		int of = 20;
 		
@@ -65,31 +65,31 @@ public class Frame extends JFrame implements ActionListener, MouseWheelListener 
 		addRadioButton("Z", "axisZ", axis, 610, 90 + of, 36, 20, false);
 		addRadioButton("C", "axisC", axis, 645, 90 + of, 36, 20, false);
 
-		JLabel scalel = new JLabel("Ось масштабирования:");
-		scalel.setBounds(540, 130 + of, 200, 20);
-		this.add(scalel);
-
-		ButtonGroup scale = new ButtonGroup();
-		addRadioButton("*", "scaleA", scale, 540, 150 + of, 36, 20, true);
-		addRadioButton("X", "scaleX", scale, 575, 150 + of, 36, 20, false);
-		addRadioButton("Y", "scaleY", scale, 610, 150 + of, 36, 20, false);
-		addRadioButton("Z", "scaleZ", scale, 645, 150 + of, 36, 20, false);
-
-		JLabel movel = new JLabel("Ось перемещения:");
-		movel.setBounds(540, 190 + of, 200, 20);
-		this.add(movel);
-
-		ButtonGroup move = new ButtonGroup();
-		addRadioButton("X", "moveX", move, 540, 210 + of, 36, 20, true);
-		addRadioButton("Y", "moveY", move, 590, 210 + of, 36, 20, false);
-		addRadioButton("Z", "moveZ", move, 640, 210 + of, 36, 20, false);
+//		JLabel scalel = new JLabel("Ось масштабирования:");
+//		scalel.setBounds(540, 130 + of, 200, 20);
+//		this.add(scalel);
+//
+//		ButtonGroup scale = new ButtonGroup();
+//		addRadioButton("*", "scaleA", scale, 540, 150 + of, 36, 20, true);
+//		addRadioButton("X", "scaleX", scale, 575, 150 + of, 36, 20, false);
+//		addRadioButton("Y", "scaleY", scale, 610, 150 + of, 36, 20, false);
+//		addRadioButton("Z", "scaleZ", scale, 645, 150 + of, 36, 20, false);
+//
+//		JLabel movel = new JLabel("Ось перемещения:");
+//		movel.setBounds(540, 190 + of, 200, 20);
+//		this.add(movel);
+//
+//		ButtonGroup move = new ButtonGroup();
+//		addRadioButton("X", "moveX", move, 540, 210 + of, 36, 20, true);
+//		addRadioButton("Y", "moveY", move, 590, 210 + of, 36, 20, false);
+//		addRadioButton("Z", "moveZ", move, 640, 210 + of, 36, 20, false);
 		
-		JLabel help = new JLabel("<html><center>Масштаб: <i>колесо мыши</i><br/>" +
-				"Вращение: ← →<br/>" +
-				"Перемещение: ↑ ↓</center></html>");
-		help.setForeground(Color.decode("#5c9862"));
-		help.setBounds(540, 255, 200, 100);
-		this.add(help);
+//		JLabel help = new JLabel("<html><center>Масштаб: <i>колесо мыши</i><br/>" +
+//				"Вращение: ← →<br/>" +
+//				"Перемещение: ↑ ↓</center></html>");
+//		help.setForeground(Color.decode("#5c9862"));
+//		help.setBounds(540, 255, 200, 100);
+//		this.add(help);
 		
 		this.pack();
 		this.setLocationRelativeTo(null);
