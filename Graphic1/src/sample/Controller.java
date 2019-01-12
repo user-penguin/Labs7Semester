@@ -16,12 +16,7 @@ import javafx.scene.control.Slider;
 import transform.DefaultTransform;
 import transform.TransformLib;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
-
 
 import static transform.TransformLib.*;
 
@@ -99,26 +94,10 @@ public class Controller {
         draw(dots);
     }
 
-
-
-
     @FXML
-    private void Scale() throws InterruptedException {
-        // масштабируем относительно точки или нет
-        if (UsePoint.isSelected()) {
-            System.out.println("Чекбокс выбран");
-            // старые точки
-            stock = dots;
-            dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
-                    Double.parseDouble(XPoint.getText()) + 200,
-                    Double.parseDouble(YPoint.getText()) + 250,
-                    Double.parseDouble(ZPoint.getText()));
-            draw(dots);
-
-            dCoordinate = 5;
-            double E = 0.005;
-
-            while (Math.abs(dCoordinate) > E)
+    protected AnimationTimer calcDelta = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
             {
                 try {
                     Thread.sleep(1000);
@@ -138,10 +117,35 @@ public class Controller {
                 }
                 dCoordinate = Math.max(dXmax, Math.max(dYmax, dZmax));
                 System.out.println("Я в вайле");
+                this.stop();
+                return;
+            }
+        }
+    };
+
+    @FXML
+    private void Scale() throws InterruptedException {
+        // масштабируем относительно точки или нет
+        if (UsePoint.isSelected()) {
+            System.out.println("Чекбокс выбран");
+            // старые точки
+            stock = dots;
+            dots = calculateScaleByDot(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue(),
+                    Double.parseDouble(XPoint.getText()) + 200,
+                    Double.parseDouble(YPoint.getText()) + 250,
+                    Double.parseDouble(ZPoint.getText()));
+            draw(dots);
+
+            dCoordinate = 5;
+            double E = 0.005;
+
+            while (Math.abs(dCoordinate) > E)
+            {
+                calcDelta.start();
                 draw(dots);
             }
 
-           draw(stock);
+            draw(stock);
             dots = stock;
         } else {
             dots = calculateScale(dots, XScale.getValue(), YScale.getValue(), ZScale.getValue());
@@ -176,40 +180,6 @@ public class Controller {
 
     @FXML
     private void draw(double dotsToDraw[][]) {
-        JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        final LinesComponent comp = new LinesComponent();
-        comp.setPreferredSize(new Dimension(320, 200));
-        testFrame.getContentPane().add(comp, BorderLayout.CENTER);
-        JPanel buttonsPanel = new JPanel();
-
-        testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
-
-        newLineButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int x1 = (int) (Math.random()*320);
-                int x2 = (int) (Math.random()*320);
-                int y1 = (int) (Math.random()*200);
-                int y2 = (int) (Math.random()*200);
-                Color randomColor = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
-                comp.addLine(x1, y1, x2, y2, randomColor);
-            }
-        });
-
-
-        clearButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                comp.clearLines();
-            }
-        });
-        testFrame.pack();
-        testFrame.setVisible(true);
-
-
-
         Group group = new Group();
 
         double[][] transformsDots = MathMatrix.multiple(dotsToDraw, DefaultTransform.getOfficceMatrix());
