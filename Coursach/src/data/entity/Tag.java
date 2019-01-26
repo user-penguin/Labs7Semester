@@ -1,4 +1,4 @@
-package data;
+package data.entity;
 
 public enum Tag {
     CLASSIC,

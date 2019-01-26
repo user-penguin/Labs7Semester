@@ -1,0 +1,15 @@
+{
+  "books":
+  [
+    {
+      "name": "Master and Margarita",
+      "author": "Bulgakov",
+      "year": "1968",
+      "tags":
+      [
+        "FANTASY",
+        "HISTORY"
+      ]
+    }
+  ]
+}

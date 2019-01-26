@@ -1,17 +1,14 @@
-package data;
+package data.entity;
 
 import java.util.ArrayList;
 
-public interface Book {
-    String name = "DefaultBook";
-    String author = "DefaultAuthor";
-    String year = "2000";
+public interface IBook {
     ArrayList<Tag> tagList = new ArrayList<>();
 
     void setName(String name);
     void setAuthor(String author);
     void setYear(String year);
-    void putTag(Tag tag);
+    void putTags(ArrayList<Tag> tags);
 
     public String getName();
     public String getAuthor();
