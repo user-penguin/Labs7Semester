@@ -2,13 +2,25 @@
   "books":
   [
     {
+      "id": 1,
       "name": "Master and Margarita",
       "author": "Bulgakov",
-      "year": "1968",
+      "year": "1966",
       "tags":
       [
         "FANTASY",
         "HISTORY"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Vij",
+      "author": "Gogol",
+      "year": "1835",
+      "tags":
+      [
+        "FANTASY",
+        "NOVEL"
       ]
     }
   ]

@@ -5,6 +5,8 @@ import data.entity.IBook;
 import data.entity.ILibrary;
 import data.entity.IUser;
 
+import data.entity.Tag;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -23,9 +25,34 @@ public class Library implements ILibrary {
         users = new ArrayList<>();
     }
 
-    public void initialization() throws FileNotFoundException {
+    public void initialization() {
         JSONObject booksFromFile = DBTools.getBooksJSON();
+        ArrayList<IBook> bookArrayList = new ArrayList<>();
+        // выдёргиваем массив книг в джсон формате
+        JSONArray allBooksFromJSON = (JSONArray) booksFromFile.get("books");
+        for (Object book: allBooksFromJSON) {
+            // создадим новую книгу
+            JSONObject bookFrame = (JSONObject) book;
+            // создадим лист тегов для новой книги
+            ArrayList<Tag> tagList = new ArrayList<>();
+            JSONArray tagListJSON = (JSONArray) bookFrame.get("tags");
+            for (Object tag: tagListJSON) {
+                tagList.add(Tag.valueOf(tag.toString()));
+            }
+            StandardBook realBook = new StandardBook(
+                    bookFrame.get("name").toString(),
+                    bookFrame.get("author").toString(),
+                    bookFrame.get("year").toString(),
+                    tagList);
+            bookArrayList.add(realBook);
+        }
+
         JSONObject usersFromFile = DBTools.getUsersJSON();
+
+    }
+
+    public ArrayList<IUser> getUsers() {
+        return this.users;
     }
 
     @Override
@@ -64,6 +91,11 @@ public class Library implements ILibrary {
     @Override
     public void addBook(IBook book) {
         this.books.add(book);
+    }
+
+    @Override
+    public void createUser(IUser user) {
+        this.users.add(user);
     }
 
     @Override

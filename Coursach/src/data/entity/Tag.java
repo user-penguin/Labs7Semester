@@ -5,8 +5,9 @@ public enum Tag {
     FANTASY,
     SCIFI,
     DETECTIVE,
-    ROMAN,
     BALLADE,
     HISTORY,
-    RELIGY
+    RELIGY,
+    NOVEL,
+    STORY
 }

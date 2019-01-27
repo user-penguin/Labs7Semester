@@ -1,0 +1,15 @@
+{
+  "users":
+  [
+    {
+      "name": "Ivan",
+      "id": 12,
+      "password": "6776767",
+      "tags":
+      [
+        "FANTASY",
+        "NOVEL"
+      ]
+    }
+  ]
+}
