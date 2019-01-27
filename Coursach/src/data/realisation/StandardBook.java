@@ -82,7 +82,7 @@ public class StandardBook implements IBook {
         // вбиваем тэги в лист
         JSONArray tagsJSON = new JSONArray();
         for (Tag tag: tags) {
-            tagsJSON.add(tag);
+            tagsJSON.add(tag.toString());
         }
         result.put("tags", tagsJSON);
         return  result;
