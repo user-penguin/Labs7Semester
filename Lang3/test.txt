@@ -1,7 +1,6 @@
 class Main {
-
-    double ch = 4 - 2-3-4*2*3*4>34;
-    char ch[] = new double[10];
+    double miu = 15;
+    int ch[] = new int[10];
 
     void f1() {
         ;
