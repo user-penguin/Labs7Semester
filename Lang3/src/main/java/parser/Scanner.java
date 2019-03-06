@@ -134,7 +134,6 @@ public class Scanner {
             return scannerError("Ошибка считывания Const_Char");
     }
 
-    // todo тут должно быть распознавание восьмеричных и шестнадцатеричных
     private Token scannerNumber() {
         String str = "" + text.charAt(numberSymbol);
         if (text.charAt(numberSymbol) != '0') {

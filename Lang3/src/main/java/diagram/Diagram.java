@@ -27,15 +27,17 @@ public class Diagram {
         Token token = nextTokenRead();
         while (token.getType() != TokenType.Close_Braces && token.getType() != TokenType.EOF) {
             if (isOperatorsAndDate(token))
-                operatorsAndDate();
-            else if (isDate(token))
-                date();
+                operatorsAndData();
+            else if (isData(token))
+                data();
             else
                 printError("Неизвестный символ");
             token = nextTokenRead();
         }
         nextToken(TokenType.Close_Braces, "Ожидался символ }");
     }
+
+    // добавочка в дерево
     private void addClass(Token token) {
         tree = thisTree = new ProgramTree(token.getText());
         thisTree.setRight(Node.createEmptyNode());
@@ -64,7 +66,7 @@ public class Diagram {
 //
 //        token = nextTokenRead();
 //        if (isOperatorsAndDate(token))
-//            operatorsAndDate();
+//            operatorsAndData();
 //        else
 //            printError("Ожидался символ {");
 //    }
@@ -80,7 +82,7 @@ public class Diagram {
     private boolean isOperatorsAndDate(Token token) {
         return token.getType() == TokenType.Open_Braces;
     }
-    private void operatorsAndDate() {
+    private void operatorsAndData () {
         nextToken(TokenType.Open_Braces, "Ожидался символ {");
 
         in();
@@ -88,8 +90,8 @@ public class Diagram {
         while (token.getType() != TokenType.Open_Braces && token.getType() != TokenType.EOF) {
             if (isOperator(token))
                 operator();
-            else if (isDate(token))
-                date();
+            else if (isData(token))
+                data();
             else
                 printError("Неизвестный символ");
             token = nextTokenRead();
@@ -109,10 +111,10 @@ public class Diagram {
 
 
 
-    private boolean isDate(Token token) {
+    private boolean isData (Token token) {
         return token.getType() == TokenType.DOUBLE || token.getType() == TokenType.INT;
     }
-    private void date() {
+    private void data () {
         Token token = scanner.nextScanner();
 
         TypeData typeData;
@@ -123,8 +125,8 @@ public class Diagram {
         }
 
         token = nextTokenRead();
-        if (isVeriable(token))
-            veriable(typeData);
+        if (isVariable(token))
+            variable(typeData);
         else
             printError("Ожидался идентификатор");
 
@@ -132,8 +134,8 @@ public class Diagram {
         while (token.getType() == TokenType.Comma) {
             scanner.nextScanner();
             token = nextTokenRead();
-            if (isVeriable(token))
-                veriable(typeData);
+            if (isVariable(token))
+                variable(typeData);
             else
                 printError("Ожидался идентификатор");
             token = nextTokenRead();
@@ -144,10 +146,10 @@ public class Diagram {
 
 
 
-    private boolean isVeriable(Token token) {
+    private boolean isVariable (Token token) {
         return token.getType() == TokenType.Id;
     }
-    private void veriable(TypeData typeData) {
+    private void variable (TypeData typeData) {
         Token varName = nextToken(TokenType.Id, "Ожидался идентификатрор");
 
         boolean init = false;
@@ -235,7 +237,7 @@ public class Diagram {
             saveTree = thisTree;
             thisTree.setLeft(Node.createEmptyNode());
             thisTree = thisTree.left;
-            operatorsAndDate();
+            operatorsAndData();
         }
         else if (isLoopWhile(token))
             loopWhile();
