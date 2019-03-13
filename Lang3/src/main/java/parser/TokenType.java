@@ -34,11 +34,15 @@ public enum TokenType {
     Assign,
 
 
-    MAIN,
+    MAIN_CLASS,
+    MAIN_FUNC,
     CLASS,
     NEW,
     FOR,
 
     ERROR,
-    EOF
+    EOF,
+
+    VOID,
+    PUBLIC
 }

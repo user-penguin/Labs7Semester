@@ -88,13 +88,18 @@ public class Scanner {
             str += text.charAt(numberSymbol);
             addNumberSymbol();
         }
-
+        if (str.equals("public"))
+            return new Token(str, TokenType.PUBLIC);
+        if (str.equals("void"))
+            return new Token(str, TokenType.VOID);
         if (str.equals("double"))
             return new Token(TokenType.DOUBLE);
         if (str.equals("int"))
             return new Token(TokenType.INT);
+        if (str.equals("Main"))
+            return new Token(str, TokenType.MAIN_CLASS);
         if (str.equals("main"))
-            return new Token(str, TokenType.MAIN);
+            return new Token(str, TokenType.MAIN_FUNC);
         if (str.equals("class"))
             return new Token(str, TokenType.CLASS);
         if (str.equals("new"))
@@ -170,6 +175,7 @@ public class Scanner {
                     str += text.charAt(numberSymbol);
                     addNumberSymbol();
                     if (isHexDigit(text.charAt(numberSymbol)) && text.charAt(numberSymbol) != 0) {
+                        str += text.charAt(numberSymbol);
                         addNumberSymbol();
                         while (isHexDigit(text.charAt(numberSymbol))) {
                             str += text.charAt(numberSymbol);
@@ -181,6 +187,14 @@ public class Scanner {
                         } catch (NumberFormatException e) {
                             return scannerError("Ошибка считывания Type_Hex_Int слишком длинный");
                         }
+                    }
+                }
+                else {
+                    try {
+                        Integer.parseInt(str);
+                        return new Token(str, TokenType.Type_Dec_Int);
+                    } catch (NumberFormatException e) {
+                        return scannerError("Ноль какой-то неправильный у вас");
                     }
                 }
         }

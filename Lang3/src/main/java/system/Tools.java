@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Tools {
 
     static String getPathToFile () {
-        JFileChooser fileopen = new JFileChooser();
+        JFileChooser fileopen = new JFileChooser("/home/dmitry/Workspace/Labs7Semester/Lang3");
         fileopen.showDialog(null, "Выберите файл");
         String path = fileopen.getSelectedFile().getPath();
         return path;

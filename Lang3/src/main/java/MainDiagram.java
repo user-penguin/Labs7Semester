@@ -1,4 +1,5 @@
 import diagram.Diagram;
+import diagram.MyDiagram;
 import io.Reader;
 import parser.Scanner;
 import parser.Token;
@@ -11,7 +12,7 @@ public class MainDiagram {
         String text = Tools.getSourceText();
 
         Scanner scanner = new Scanner(text);
-        Diagram diagram = new Diagram(scanner);
+        MyDiagram diagram = new MyDiagram(scanner);
 
         diagram.program();
 
