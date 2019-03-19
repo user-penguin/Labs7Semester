@@ -5,5 +5,6 @@ public enum TypeObject {
     ARRAY,
     EMPTY,
     CLASS,
-    CONST
+    CONST,
+    FUNCTION
 }

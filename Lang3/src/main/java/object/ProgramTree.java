@@ -28,13 +28,13 @@ public class ProgramTree {
         right = new ProgramTree(null, null, this, node);
     }
 
-//    public ProgramTree findUpFunction(String name) {
-//        ProgramTree i = this;
-//        while (i != null && !(name.equals(i.node.name) && i.node.typeObject == TypeObject.FUNCTION)) {
-//            i = i.up;
-//        }
-//        return i;
-//    }
+    public ProgramTree findUpFunction(String name) {
+        ProgramTree i = this;
+        while (i != null && !(name.equals(i.node.name) && i.node.typeObject == TypeObject.FUNCTION)) {
+            i = i.up;
+        }
+        return i;
+    }
 
     public ProgramTree findUpVarOrArray(String name) {
         ProgramTree i = this;

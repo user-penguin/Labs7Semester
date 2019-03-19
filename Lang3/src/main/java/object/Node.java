@@ -12,6 +12,10 @@ public class Node {
         isInit = false;
     }
 
+    public TypeObject getTypeObject () {
+        return typeObject;
+    }
+
     public static Node createVar(String name, TypeData typeData) {
         Node node = new Node();
         node.typeObject = TypeObject.VAR;
@@ -29,13 +33,13 @@ public class Node {
         return node;
     }
 
-//    public static Node createFunction(String name) {
-//        Node node = new Node();
-//        node.typeObject = TypeObject.FUNCTION;
-//        node.name = name;
-//        node.typeData = TypeData.VOID;
-//        return node;
-//    }
+    public static Node createFunction(String name) {
+        Node node = new Node();
+        node.typeObject = TypeObject.FUNCTION;
+        node.name = name;
+        node.typeData = TypeData.VOID;
+        return node;
+    }
 
     static Node createClass(String name) {
         Node node = new Node();
@@ -76,8 +80,8 @@ public class Node {
         str += " " + name;
         if (typeObject == TypeObject.ARRAY)
             str += " n=" + n;
-//        if (typeObject != TypeObject.CLASS && typeObject != TypeObject.FUNCTION)
-//            str += " init-" + isInit;
+        if (typeObject != TypeObject.CLASS && typeObject != TypeObject.FUNCTION)
+            str += " init-" + isInit;
         return str;
     }
 }

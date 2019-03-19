@@ -1,12 +1,24 @@
 package diagram;
 
+import object.Node;
+import object.ProgramTree;
 import object.TypeData;
+import object.TypeObject;
 import parser.Scanner;
 import parser.Token;
 import parser.TokenType;
 
+import java.lang.reflect.Type;
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class MyDiagram {
     private Scanner scanner;
+
+    private ProgramTree tree;
+    private ProgramTree thisTree;
+    private ProgramTree saveTree;
+    private Deque<ProgramTree> stack = new LinkedList<>();
 
     public MyDiagram (Scanner scanner) {
         this.scanner = scanner;
@@ -15,12 +27,15 @@ public class MyDiagram {
     // todo oooooooo
     public void program () {
         nextToken(TokenType.CLASS, "Ожидался класс");
-        nextToken(TokenType.MAIN_CLASS, "Ожидался Main");
+        Token tokenClassMain = nextToken(TokenType.MAIN_CLASS, "Ожидался Main");
+        addClassMain(tokenClassMain);
+//        nextToken(TokenType.MAIN_CLASS, "Ожидался Main");
         nextToken(TokenType.Open_Braces, "Ожидался символ {");
 
         Token token = nextTokenRead();
         while (token.getType() != TokenType.Close_Braces && token.getType() != TokenType.EOF) {
-            if (isFunction(token))
+            // todo допилить функцию до общих значений
+            if (isFunctionMain(token))
                 function();
             else if (isData(token))
                 data();
@@ -31,7 +46,14 @@ public class MyDiagram {
         nextToken(TokenType.Close_Braces, "Ожидался символ }");
     }
 
-    private boolean isFunction(Token token) {
+    // добавление класса в дерево
+    private void addClassMain (Token token) {
+        tree = thisTree = new ProgramTree(token.getText());
+        thisTree.setRight(Node.createEmptyNode());
+        thisTree = thisTree.right;
+    }
+
+    private boolean isFunctionMain(Token token) {
         return token.getType() == TokenType.VOID || token.getType() == TokenType.PUBLIC;
     }
 
@@ -42,9 +64,11 @@ public class MyDiagram {
         if (token.getType() == TokenType.VOID) {
             tokenFunction = nextToken(TokenType.Id, "Ожидался идентификатор");
         } else {
+            nextToken(TokenType.STATIC, "Ожидался статик");
             nextToken(TokenType.VOID, "Ожидался void");
             tokenFunction = nextToken(TokenType.MAIN_FUNC, "Ожидался main");
         }
+        addFunction(tokenFunction);
 
         nextToken(TokenType.Open_Breaket, "Ожидался символ (");
         nextToken(TokenType.Close_Breaket, "Ожидался символ )");
@@ -56,24 +80,56 @@ public class MyDiagram {
             printError("Ожидался символ {");
     }
 
+    private void addFunction(Token token) {
+        if (thisTree.findUpFunction(token.getText()) != null) {
+            printSemError("Функция " + token.getText() + " уже была объявлена");
+        }
+        thisTree.setLeft(Node.createFunction(token.getText()));
+        thisTree = thisTree.left;
+    }
+
     private boolean isOperatorsAndData (Token token) {
         return token.getType() == TokenType.Open_Braces;
     }
 
     private void operatorsAndData () {
         nextToken(TokenType.Open_Braces, "Ожидался символ {");
+        in();
         Token token = nextTokenRead();
+        boolean find = false;
         // тут была открывающаяся скобка
         while (token.getType() != TokenType.Close_Braces && token.getType() != TokenType.EOF) {
-            if (isOperator(token))
+            if (isOperator(token)) {
+                find = true;
                 operator();
-            else if (isData(token))
+            }
+            else if (isData(token)) {
+                find = true;
                 data();
+            }
             else
                 printError("Неизвестный символ");
             token = nextTokenRead();
         }
+        if (!find) {
+            printError("Недостижимый код");
+        }
+        out();
         nextToken(TokenType.Close_Braces, "Ожидался символ }");
+    }
+
+    private void in () {
+        stack.push(thisTree);
+        thisTree.setRight(Node.createEmptyNode());
+        thisTree = thisTree.right;
+    }
+
+    private void out () {
+        thisTree = stack.pop();
+        if (thisTree.node.getTypeObject() == TypeObject.EMPTY) {
+            thisTree.setLeft(Node.createEmptyNode());
+            thisTree = thisTree.left;
+        }
     }
 
     private boolean isData (Token token) {
@@ -129,16 +185,21 @@ public class MyDiagram {
         if (token.getType() == TokenType.Assign) {
             nextToken(TokenType.Assign, "Ожидался символ =");
             token = nextTokenRead();
-            if (isExpression(token))
+            if (isExpression(token)) {
                 expression();
-            else
+            }
+            else {
                 printError("Ожидалось выражение");
+            }
+            init = true;
         }
         // массив
         else if (token.getType() == TokenType.Open_Square) {
             nextToken(TokenType.Open_Square, "Ожидался символ [");
             nextToken(TokenType.Close_Square, "Ожидался символ ]");
-
+            if (thisTree.findUpVarOrArray(varName.getText()) != null) {
+                printSemError("Идентификатор " + varName.getText() + " уже использовался");
+            }
             if (nextTokenRead().getType() == TokenType.Assign) {
                 nextToken(TokenType.Assign, "Ожидался символ =");
                 nextToken(TokenType.NEW, "Ожидался символ new");
@@ -155,12 +216,45 @@ public class MyDiagram {
 
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
                 Token tokenN = nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
+                if (thisTree.findUpArray(varName.getText()) != null) {
+                    Node mass = thisTree.findUpArray(varName.getText()).node;
+                    mass.n = Integer.parseInt(tokenN.getText());
+                    mass.isInit = true;
+                }
                 nextToken(TokenType.Close_Square, "Ожидался символ ]");
+                if (typeData == typeDataOfArray) {
+                    addArray(typeData, true, varName, Integer.parseInt(tokenN.getText()));
+                }
+                else {
+                    printSemError("Неверный тип массива");
+                }
+            } else {
+                addArray(typeData, false, varName, 0);
             }
             return;
         }
-        else
-            printError("Неизветный символ");
+        addVar(typeData, init, varName);
+    }
+
+    private void addArray (TypeData typeData, boolean init, Token name, int n) {
+        if (thisTree.findUpArray(name.getText()) != null) {
+            printSemError("Массив " + name.getText() + " уже существует");
+        }
+        else {
+            thisTree.setLeft(Node.createArray(name.getText(), typeData, n));
+            thisTree.left.node.isInit = init;
+            thisTree = thisTree.left;
+        }
+    }
+
+    private void addVar (TypeData typeData, boolean init, Token name) {
+        if (thisTree.findUpVar(name.getText()) != null) {
+            printSemError("Переменная " + name.getText() + " уже существует");
+        } else {
+            thisTree.setLeft(Node.createVar(name.getText(), typeData));
+            thisTree.left.node.isInit = init;
+            thisTree = thisTree.left;
+        }
     }
 
     private boolean isOperator(Token token) {
@@ -186,16 +280,27 @@ public class MyDiagram {
 
             token = nextTokenRead();
             if (isAssignment(token)) {
-                assignment(tokenName);
+                Node node = assignment(tokenName);
             }
             else if (token.getType() == TokenType.Open_Breaket) {
                 nextToken(TokenType.Open_Breaket, "Ожидался символ (");
+                if (thisTree.findUpFunction(tokenName.getText()) == null) {
+                    printSemError("Функция '" + tokenName.getText() + "()' не определена");
+                }
                 nextToken(TokenType.Close_Breaket, "Ожидался символ )");
                 nextToken(TokenType.Semicolon, "Ожидался символ ;");
             }
             else if (token.getType() == TokenType.Open_Square) {
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
                 Token indexArray = nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
+
+                if (thisTree.findUpArray(tokenName.getText()) != null) {
+                    Node mass = thisTree.findUpArray(tokenName.getText()).node;
+                    if (mass.n <= Integer.parseInt(indexArray.getText())) {
+                        printSemError("Выход за границу массива");
+                    }
+                }
+
                 nextToken(TokenType.Close_Square, "Ожидался символ ]");
 
                 token = nextTokenRead();
@@ -217,11 +322,22 @@ public class MyDiagram {
         return token.getType() == TokenType.Assign;
     }
 
-    private void assignment(Token tokenName) {
+    private Node assignment(Token tokenName) {
         nextToken(TokenType.Assign, "Ожидался символ =");
         Token token = nextTokenRead();
         if (isExpression(token)) {
-            expression();
+            Node node = expression();
+            if (thisTree.findUpVarOrArray(tokenName.getText()) == null) {
+                printSemError("Переменная или массив '" + tokenName.getText() + "' не найдены");
+            } else {
+                if (inType(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData, node.typeData)) {
+                    Node mass = thisTree.findUpVarOrArray(tokenName.getText()).node;
+                    mass.isInit = true;
+                } else {
+                    printSemError("Не верный тип");
+                }
+            }
+            return node;
         } else  {
             nextToken(TokenType.NEW, "Ожидался new");
             token = scanner.nextScanner();
@@ -229,9 +345,28 @@ public class MyDiagram {
             if (typeMass != TokenType.DOUBLE && typeMass != TokenType.INT)
                 printError("Ожидался тип");
             nextToken(TokenType.Open_Square, "Ожидался символ [");
+
             Token tokenN = nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
 
+            if (thisTree.findUpArray(tokenName.getText()).node.typeData == null) {
+                printSemError("Массив '" + tokenName.getText() + "' не найден");
+            } else {
+                TypeData typeDataMass;
+                if (typeMass == TokenType.DOUBLE) {
+                    typeDataMass = TypeData.DOUBLE;
+                } else {
+                    typeDataMass = TypeData.INTEGER;
+                }
+                if (thisTree.findUpArray(tokenName.getText()).node.typeData == typeDataMass) {
+                    Node mass = thisTree.findUpVarOrArray(tokenName.getText()).node;
+                    mass.isInit = true;
+                    mass.n = Integer.parseInt(tokenN.getText());
+                } else {
+                    printSemError("Не верный тип массива");
+                }
+            }
             nextToken(TokenType.Close_Square, "Ожидался символ ]");
+            return  Node.createArray("", TypeData.DOUBLE, 3);
         }
     }
 
@@ -288,14 +423,25 @@ public class MyDiagram {
         return isExpression2(token);
     }
 
-    private void expression () {
-        expression2();
+    private Node expression () {
+        Node node = expression2();
+        TypeData typeData = node.typeData;
+
         Token token = nextTokenRead();
         while (token.getType() == TokenType.Eq || token.getType() == TokenType.Not_Eq) {
             scanner.nextScanner();
-            expression2();
+
+            Node node2 = expression2();
+            TypeData typeData2 = node2.typeData;
+            if (isNumber(typeData) && isNumber(typeData2)) {
+                node.typeData = TypeData.INTEGER;
+            } else {
+                node.typeData = TypeData.UNKNOW;
+                printSemError("Неопределённый тип");
+            }
             token = nextTokenRead();
         }
+        return node;
 
     }
 
@@ -303,17 +449,28 @@ public class MyDiagram {
         return isExpression3(token);
     }
 
-    private void expression2 () {
-        expression3();
+    private Node expression2 () {
+        Node node = expression3();
+        TypeData typeData = node.typeData;
+
         Token token = nextTokenRead();
         while (token.getType() == TokenType.Great ||
                 token.getType() == TokenType.Less ||
                 token.getType() == TokenType.Great_Eq ||
                 token.getType() == TokenType.Less_Eq) {
             scanner.nextScanner();
-            expression3();
+
+            Node node2 = expression3();
+            TypeData typeData2 = node2.typeData;
+            if (isNumber(typeData) && isNumber(typeData2)) {
+                node.typeData = TypeData.INTEGER;
+            } else {
+                node.typeData = TypeData.UNKNOW;
+                printSemError("Неопределённый тип");
+            }
             token = nextTokenRead();
         }
+        return node;
     }
 
     // выражение 3
@@ -321,31 +478,95 @@ public class MyDiagram {
         return isExpression4(token);
     }
 
-    private void expression3 () {
-        expression4();
+    private Node expression3 () {
+        Node node = expression4();
+        TypeData typeData = node.typeData;
+
         Token token = nextTokenRead();
         while (token.getType() == TokenType.Plus || token.getType() == TokenType.Minus) {
             scanner.nextScanner();
-            expression4();
+
+            Node node2 = expression4();
+            TypeData typeData2 = node2.typeData;
+
+            node.typeData = toTypeDataPlusMinus(typeData, typeData2);
+            if (typeData ==TypeData.UNKNOW) {
+                printSemError("Неопределённый тип");
+            }
             token = nextTokenRead();
         }
+        return node;
     }
+
+    private TypeData toTypeDataPlusMinus (TypeData typeData1, TypeData typeData2) {
+        if (typeData1 == TypeData.STRING || typeData2 == TypeData.STRING) {
+            if (typeData1 != TypeData.UNKNOW && typeData2 != TypeData.UNKNOW) {
+                return TypeData.STRING;
+            } else {
+                return TypeData.UNKNOW;
+            }
+        } else {
+            return toTypeDataSlashStar(typeData1, typeData2);
+        }
+    }
+
+    private TypeData toTypeDataSlashStar(TypeData typeData1, TypeData typeData2) {
+        if (typeData1 == TypeData.DOUBLE || typeData2 == TypeData.DOUBLE) {
+            if (isNumber(typeData1) && isNumber(typeData2)) {
+                return TypeData.DOUBLE;
+            } else {
+                return TypeData.UNKNOW;
+            }
+        } else if (typeData1 == TypeData.INTEGER || typeData2 == TypeData.INTEGER) {
+            if (isNumber(typeData1) && isNumber(typeData2)) {
+                return TypeData.INTEGER;
+            } else {
+                return TypeData.UNKNOW;
+            }
+        } else if (typeData1 == TypeData.CHAR || typeData2 == TypeData.CHAR) {
+            if (isNumber(typeData1) && isNumber(typeData2)) {
+                return TypeData.CHAR;
+            } else {
+                return TypeData.UNKNOW;
+            }
+        } else
+            return TypeData.UNKNOW;
+    }
+
+    private TypeData toTypeDataPercent(TypeData typeData1, TypeData typeData2) {
+        if (isNumber(typeData1) && typeData2 == TypeData.INTEGER) {
+            return TypeData.INTEGER;
+        } else
+            return TypeData.UNKNOW;
+    }
+
 
     // выражение 4
     private boolean isExpression4 (Token token) {
         return isExpression5(token);
     }
 
-    private void expression4 () {
-        expression5();
+    private Node expression4 () {
+        Node node = expression5();
+
         Token token = nextTokenRead();
         while ( token.getType() == TokenType.Star ||
                 token.getType() == TokenType.Slash ||
                 token.getType() == TokenType.Percent ) {
             scanner.nextScanner();
-            expression5();
+            Node node2 = expression5();
+            TypeData typeData2 = node2.typeData;
+            if (token.getType() == TokenType.Percent) {
+                node.typeData = toTypeDataPercent(node.typeData, typeData2);
+            } else {
+                node.typeData = toTypeDataSlashStar(node.typeData, typeData2);
+            }
+            if (node.typeData == TypeData.UNKNOW) {
+                printSemError("Неопределённый тип");
+            }
             token = nextTokenRead();
         }
+        return node;
     }
 
     // выражение 5
@@ -355,15 +576,27 @@ public class MyDiagram {
                 token.getType() == TokenType.Minus;
     }
 
-    private void expression5 () {
-
+    private Node expression5 () {
         Token token = nextTokenRead();
+
+        boolean isZnak = false;
         while (token.getType() == TokenType.Plus || token.getType() == TokenType.Minus) {
             scanner.nextScanner();
             token = nextTokenRead();
+            isZnak = true;
         }
-        expression6();
 
+        Node node = expression6();
+        if (isZnak) {
+            if (node.typeData != TypeData.DOUBLE && node.typeData != TypeData.INTEGER) {
+                printSemError("Неопределённый тип");
+                return Node.createUnknow();
+            } else {
+                return node;
+            }
+        } else {
+            return node;
+        }
     }
 
     // выражение 6
@@ -376,33 +609,74 @@ public class MyDiagram {
                 token.getType() == TokenType.Const_Char;
     }
 
-    private void expression6 () {
+    private Node expression6 () {
         Token token = scanner.nextScanner();
+
         if (token.getType() == TokenType.Id) {
+            Token tokenName = token;
             token = nextTokenRead();
+
             if (token.getType() == TokenType.Open_Square) {
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
-                nextToken(TokenType.Type_Dec_Int, "Ожидалось целое десятичное");
+                nextToken(TokenType.INT, "Ожидалось целое");
                 nextToken(TokenType.Close_Square, "Ожидался символ ]");
-            }
-            else if (token.getType() == TokenType.Open_Breaket) {
+                if (thisTree.findUpVarOrArray(tokenName.getText()) != null)
+                    return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
+                else {
+                    printSemError("Неизвестная переменная");
+                    return Node.createUnknow();
+                }
+            } else if (token.getType() == TokenType.Open_Breaket) {
                 nextToken(TokenType.Open_Breaket, "Ожидался символ (");
                 nextToken(TokenType.Close_Breaket, "Ожидался символ )");
-            }
+                if (thisTree.findUp(tokenName.getText()) != null)
+                    return Node.createFunction(tokenName.getText());
+                else
+                    return Node.createUnknow();
 
-        }
-        else if (token.getType() == TokenType.Open_Breaket) {
-            token = nextTokenRead();
-            if (isExpression(token)) {
-                expression();
             }
             else {
-                printError("Ожидалось выржение");
+                if (thisTree.findUpVarOrArray(tokenName.getText()) != null)
+                    return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
+                else {
+                    printSemError("Неизвестная переменная");
+                    return Node.createUnknow();
+                }
             }
+        } else if (token.getType() == TokenType.Open_Breaket) {
+
+            token = nextTokenRead();
+            Node node = null;
+            if (isExpression(token))
+                node = expression();
+            else
+                printError("Ожидалось выражение");
             nextToken(TokenType.Close_Breaket, "Ожидался символ )");
+            return node;
+        } else if (token.getType() == TokenType.INT) {
+            return Node.createConst(TypeData.INTEGER);
+        } else if (token.getType() == TokenType.DOUBLE) {
+            return Node.createConst(TypeData.DOUBLE);
+        } else {
+            return Node.createConst(TypeData.CHAR);
         }
     }
 
+    private Boolean isNumber(TypeData typeData) {
+        return typeData == TypeData.DOUBLE ||
+                typeData == TypeData.INTEGER;
+    }
+
+    private boolean inType (TypeData typeData1, TypeData typeData2) {
+        if (typeData1 == TypeData.DOUBLE && isNumber(typeData2)) {
+            return true;
+        }
+        if (typeData1 == TypeData.INTEGER && isNumber(typeData2) && typeData2 != TypeData.DOUBLE) {
+            return true;
+        }
+        // char приведение может быть размещено здесь
+        return false;
+    }
 
     private Token nextToken (TokenType type, String text) {
         Token token = scanner.nextScanner();

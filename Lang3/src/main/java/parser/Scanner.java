@@ -92,6 +92,8 @@ public class Scanner {
             return new Token(str, TokenType.PUBLIC);
         if (str.equals("void"))
             return new Token(str, TokenType.VOID);
+        if (str.equals("static"))
+            return new Token(TokenType.STATIC);
         if (str.equals("double"))
             return new Token(TokenType.DOUBLE);
         if (str.equals("int"))

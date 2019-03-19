@@ -1,15 +1,18 @@
 class Main {
-    public void main() {
+    public static void main() {
         int a = 9;
         double f = 9;
         int b = 32;
         int m[] = new int[123];
-        b = m[1];
-        n = a + g;
+        int g = 23;
+         int d = 12;
+        int n = a + g;
         int k = 0x10;
+        int w = 19;
         for (w = 1 + 2; w > 10 + d; w = w + 1) {
-            int d = 3;
+            int ds = 3;
         }
         ;
     }
+
 }
