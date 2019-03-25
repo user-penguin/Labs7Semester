@@ -21,5 +21,7 @@ public class MainDiagram {
             System.out.println("Синтаксических ошибок не обнаружено!");
         else
             diagram.printError("Лишний текст в конце программы");
+
+        diagram.getTree().print(0);
     }
 }

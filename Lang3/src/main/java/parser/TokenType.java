@@ -1,12 +1,11 @@
 package parser;
 
 public enum TokenType {
-    Type_Dec_Int,
-    Type_Oct_Int,
-    Type_Hex_Int,
+    INT,
+    INT8,
+    INT16,
     Const_Char,
     DOUBLE,
-    INT,
     Id,
 
     Plus,

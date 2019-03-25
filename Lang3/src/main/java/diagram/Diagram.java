@@ -183,7 +183,7 @@ public class Diagram {
                 // @TODO: перепилить под норм целочисленку
 
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
-                Token tokenN = nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
+                Token tokenN = nextToken(TokenType.INT, "Ожидалось целое");
                 if (thisTree.findUpArray(varName.getText()) != null) {
                     Node mass = thisTree.findUpArray(varName.getText()).node;
                     mass.n = Integer.parseInt(tokenN.getText());
@@ -258,7 +258,7 @@ public class Diagram {
             else if (token.getType() == TokenType.Open_Square) {
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
                 // @TODO: перепилить под норм целочисленку
-                Token indexArray = nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
+                Token indexArray = nextToken(TokenType.INT, "Ожидалось целое");
 
                 if (thisTree.findUpArray(tokenName.getText()) != null) {
                     Node mass = thisTree.findUpArray(tokenName.getText()).node;
@@ -308,7 +308,7 @@ public class Diagram {
                 printError("Ожидался тип");
             nextToken(TokenType.Open_Square, "Ожидался символ [");
             // @TODO: перепилить под норм целочисленку
-            Token tokenN = nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
+            Token tokenN = nextToken(TokenType.INT, "Ожидалось целое");
 
             if(thisTree.findUpArray(tokenName.getText()) == null)
                 printSemError("Массив '" + tokenName.getText() + "' не найден");
@@ -549,7 +549,7 @@ public class Diagram {
     private boolean isExpression6(Token token) {
         return token.getType() == TokenType.Id ||
                 token.getType() == TokenType.Open_Breaket ||
-                token.getType() == TokenType.Type_Dec_Int ||
+                token.getType() == TokenType.INT ||
                 token.getType() == TokenType.DOUBLE ||
                 token.getType() == TokenType.Const_Char;
     }
@@ -562,7 +562,7 @@ public class Diagram {
 
             if (token.getType() == TokenType.Open_Square) {
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
-                nextToken(TokenType.Type_Dec_Int, "Ожидалось целое");
+                nextToken(TokenType.INT, "Ожидалось целое");
                 nextToken(TokenType.Close_Square, "Ожидался символ ]");
                 if (thisTree.findUpVarOrArray(tokenName.getText()) != null)
                     return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
@@ -570,16 +570,7 @@ public class Diagram {
                     printSemError("Неизвестная переменная");
                     return Node.createUnknow();
                 }
-            } //else {
-            //                nextToken(TokenType.OPEN_PARENTHESIS, "Ожидался символ (");
-//                nextToken(TokenType.CLOSE_PARENTHESIS, "Ожидался символ )");
-//                if (thisTree.findUp(tokenName.getText()) != null)
-//                    return Node.createFunction(tokenName.getText());
-//                else
-//                    return Node.createUnknow();
-//
-//            }
-            else {
+            } else {
                 if (thisTree.findUpVarOrArray(tokenName.getText()) != null)
                     return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
                 else {
@@ -597,8 +588,12 @@ public class Diagram {
                 printError("Ожидалось выражение");
             nextToken(TokenType.Close_Breaket, "Ожидался символ )");
             return node;
-        } else if (token.getType() == TokenType.Type_Dec_Int) {
+        } else if (token.getType() == TokenType.INT) {
             return Node.createConst(TypeData.INTEGER);
+        } else if (token.getType() == TokenType.INT8) {
+            return Node.createConst(TypeData.INT8);
+        } else if (token.getType() == TokenType.INT16) {
+            return Node.createConst(TypeData.INT16);
         } else if (token.getType() == TokenType.DOUBLE) {
             return Node.createConst(TypeData.DOUBLE);
         } else {

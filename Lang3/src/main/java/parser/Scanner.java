@@ -151,9 +151,9 @@ public class Scanner {
             }
             try {
                 Integer.parseInt(str);
-                return new Token(str, TokenType.Type_Dec_Int);
+                return new Token(str, TokenType.INT);
             } catch (NumberFormatException e) {
-                return scannerError("Ошибка считывания Type_Dec_Int слишком длинный");
+                return scannerError("Ошибка считывания INT слишком длинный");
             }
         }
         else {
@@ -167,9 +167,9 @@ public class Scanner {
                 }
                 try {
                     Integer.parseInt(str);
-                    return new Token(str, TokenType.Type_Oct_Int);
+                    return new Token(str, TokenType.INT8);
                 } catch (NumberFormatException e) {
-                    return scannerError("Ошибка считывания Type_Oct_Int слишком длинный");
+                    return scannerError("Ошибка считывания INT8 слишком длинный");
                 }
             }
             else
@@ -185,16 +185,16 @@ public class Scanner {
                         }
                         try {
                             Integer.decode(str);
-                            return new Token(str, TokenType.Type_Hex_Int);
+                            return new Token(str, TokenType.INT16);
                         } catch (NumberFormatException e) {
-                            return scannerError("Ошибка считывания Type_Hex_Int слишком длинный");
+                            return scannerError("Ошибка считывания INT16 слишком длинный");
                         }
                     }
                 }
                 else {
                     try {
                         Integer.parseInt(str);
-                        return new Token(str, TokenType.Type_Dec_Int);
+                        return new Token(str, TokenType.INT);
                     } catch (NumberFormatException e) {
                         return scannerError("Ноль какой-то неправильный у вас");
                     }
