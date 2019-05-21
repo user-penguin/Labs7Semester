@@ -8,7 +8,13 @@ public class MainScanner {
     public static void main (String[] args) {
 
         // получение исходного текста
-        String text = Tools.getSourceText();
+        String text;
+        try {
+            text = Reader.getDate("test.txt");
+        } catch (Exception e) {
+            System.out.println("Неверны тип файла");
+            return;
+        }
 
 
         Scanner scanner = new Scanner(text);

@@ -22,7 +22,6 @@ public class MyDiagram {
         this.scanner = scanner;
     }
 
-    // todo oooooooo
     public void program () {
         nextToken(TokenType.CLASS, "Ожидался класс");
         Token tokenClassMain = nextToken(TokenType.MAIN_CLASS, "Ожидался Main");
@@ -31,7 +30,6 @@ public class MyDiagram {
 
         Token token = nextTokenRead();
         while (token.getType() != TokenType.Close_Braces && token.getType() != TokenType.EOF) {
-            // todo допилить функцию до общих значений
             if (isFunctionMain(token))
                 function();
             else if (isData(token))

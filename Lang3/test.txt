@@ -1,41 +1,11 @@
 class Main {
-    void kek2() {
-            double res = 0;
-            int res2 = res;
-            int kekeke;
-            for (int i = 2; i < 6; i = i + 1) {
-                for (int j = 0; j < 7; j = j + 1) {
-                    res = res + 2;
-                }
-            }
-            kek2();
-        }
+    void kek() {
+
+    }
 
     public static void main() {
-        int kek2 = 0;
-
-        kek2();
-
-int a;
-        double f = a;
-        int b = 32;
-        int m[] = new int[123];
-        m[1] = m[3 - m[0]];
-        int g = 23;
-         int d = 12;
-
-        int n = a + g;
-        int k = 0x10;
-        for (int w = 2; k; w = w ); {
-            int ds;
-        }
-        kek2();
+        int a;
+        kek();
+        int m[] = new int [d];
     }
-
-    void kek () {
-        int m = 10;
-    }
-
-
-
 }

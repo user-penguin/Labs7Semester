@@ -1,4 +1,3 @@
-import diagram.Diagram;
 import diagram.MyDiagram;
 import io.Reader;
 import parser.Scanner;
@@ -9,7 +8,13 @@ import system.Tools;
 public class MainDiagram {
     public static void main(String[] args) {
 
-        String text = Tools.getSourceText();
+        String text;
+        try {
+            text = Reader.getDate("test.txt");
+        } catch (Exception e) {
+            System.out.println("Неверны тип файла");
+            return;
+        }
 
         Scanner scanner = new Scanner(text);
         MyDiagram diagram = new MyDiagram(scanner);
