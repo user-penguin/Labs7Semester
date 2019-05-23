@@ -12,12 +12,14 @@ public interface IBook {
     void setYear(String year);
     void setId(int id);
     void putTags(ArrayList<Tag> tags);
+    void putUser(int id);
 
-    public String getName();
-    public int getId();
-    public String getAuthor();
-    public String getYear();
-    public ArrayList<Tag> getTaglist();
+    String getName();
+    int getId();
+    String getAuthor();
+    String getYear();
+    ArrayList<Tag> getTaglist();
+    ArrayList<Integer> getAllUserNum();
 
     JSONObject toJSON();
 }

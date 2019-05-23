@@ -9,6 +9,11 @@
       [
         "FANTASY",
         "NOVEL"
+      ],
+      "books":
+      [
+        1,
+        2
       ]
     }
   ]

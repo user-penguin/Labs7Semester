@@ -9,7 +9,7 @@ import java.io.FileReader;
 
 public class DBTools {
     private static final String pathToBooks = "/home/dmitry/Documents/Labs7Semester/Coursach/src/data/database/books.json";
-    private static final String pathToUsers = "/home/dmitry/Documents/Labs7Semester/Coursach/src/data/database/books.json";
+    private static final String pathToUsers = "/home/dmitry/Documents/Labs7Semester/Coursach/src/data/database/users.json";
 
     public static JSONObject getBooksJSON() {
         try {

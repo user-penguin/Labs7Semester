@@ -13,12 +13,14 @@ public class User implements IUser {
     private String name;
     private String password;
     private ArrayList<Tag> tags;
+    private ArrayList<Integer> books;
 
     public User(String name, String password, ArrayList<Tag> tags) {
         this.tags = new ArrayList<>();
         this.name = name;
         this.password = password;
         this.tags.addAll(tags);
+        this.books = new ArrayList<>();
     }
 
     @Override
@@ -34,6 +36,11 @@ public class User implements IUser {
     @Override
     public ArrayList<Tag> getTags() {
         return this.tags;
+    }
+
+    @Override
+    public void putBook(int id) {
+        this.books.add(id);
     }
 
     @Override
@@ -69,6 +76,12 @@ public class User implements IUser {
     }
 
     @Override
+    public ArrayList<Integer> getAllBooksNum() {
+        return this.books;
+    }
+
+    @Override
+    // перевод в JSON
     public JSONObject toJSON() {
         JSONObject result = new JSONObject();
         result.put("id", this.id);
@@ -80,9 +93,15 @@ public class User implements IUser {
             tagsJSON.add(tag.toString());
         }
         result.put("tags", tagsJSON);
+        JSONArray usersJSON = new JSONArray();
+        for (int id: this.books) {
+            usersJSON.add(id);
+        }
+        result.put("books", usersJSON);
         return  result;
     }
 
+    // перевод из
     public static User toUser(JSONObject UserJSON) {
         ArrayList<Tag> tagList = new ArrayList<>();
         JSONArray tagListJSON = (JSONArray) UserJSON.get("tags");
@@ -94,6 +113,10 @@ public class User implements IUser {
                 UserJSON.get("password").toString(),
                 tagList);
         user.setId(Integer.parseInt(UserJSON.get("id").toString()));
+        JSONArray booksJSON = (JSONArray) UserJSON.get("books");
+        for (Object book: booksJSON) {
+            user.putBook(Integer.parseInt(book.toString()));
+        }
         return user;
     }
 }

@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1107.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
   <children>
-    <Pane layoutX="779.0" layoutY="0.0" prefHeight="700.0" prefWidth="323.0" style="-fx-background-color: dodgerblue">
+    <Pane layoutX="784.0" layoutY="0.0" prefHeight="700.0" prefWidth="323.0" style="-fx-background-color: dodgerblue">
       <children>
         <Button fx:id="show" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#LoadImage" prefHeight="27.1328125" prefWidth="288.0" text="Загрузить фото" />
-        <Button layoutX="19.0" layoutY="239.0" mnemonicParsing="false" onAction="#grey" prefWidth="134.0" text="Grey" />
-        <Button layoutX="19.0" layoutY="280.0" mnemonicParsing="false" onAction="#BW" prefWidth="134.0" text="BW" />
-        <Button fx:id="negat" layoutX="19.0" layoutY="320.0" mnemonicParsing="false" onAction="#Negative" prefWidth="134.0" text="Negative" />
-        <Button layoutX="186.0" layoutY="132.0" mnemonicParsing="false" onAction="#MinusContrast" prefHeight="46.999908447265625" prefWidth="54.0" text="-" />
-        <Button layoutX="253.0" layoutY="131.0" mnemonicParsing="false" onAction="#PlusContrast" prefHeight="46.999908447265625" prefWidth="54.0" text="+" />
-        <Button layoutX="253.0" layoutY="65.0" mnemonicParsing="false" onAction="#PlusBright" prefHeight="46.999908447265625" prefWidth="54.0" text="+" />
-        <Button layoutX="186.0" layoutY="65.0" mnemonicParsing="false" onAction="#MinusBright" prefHeight="47.0" prefWidth="54.0" text="-" />
+        <Button layoutX="19.0" layoutY="212.0" mnemonicParsing="false" onAction="#grey" prefHeight="30.0" prefWidth="134.0" text="Grey" />
+        <Button layoutX="19.0" layoutY="253.0" mnemonicParsing="false" onAction="#BW" prefHeight="30.0" prefWidth="134.0" text="BW" />
+        <Button fx:id="negat" layoutX="19.0" layoutY="293.0" mnemonicParsing="false" onAction="#Negative" prefHeight="30.0" prefWidth="134.0" text="Negative" />
+        <Pane layoutX="19.0" layoutY="53.0" opacity="0.12" prefHeight="143.0" prefWidth="288.0" style="-fx-background-color: blue" />
+        <Button layoutX="176.0" layoutY="132.0" mnemonicParsing="false" onAction="#MinusContrast" prefHeight="46.999908447265625" prefWidth="54.0" text="-" />
+        <Button layoutX="243.0" layoutY="131.0" mnemonicParsing="false" onAction="#PlusContrast" prefHeight="46.999908447265625" prefWidth="54.0" text="+" />
+        <Button layoutX="243.0" layoutY="65.0" mnemonicParsing="false" onAction="#PlusBright" prefHeight="46.999908447265625" prefWidth="54.0" text="+" />
+        <Button layoutX="176.0" layoutY="65.0" mnemonicParsing="false" onAction="#MinusBright" prefHeight="47.0" prefWidth="54.0" text="-" />
         <Label layoutX="56.0" layoutY="81.0" text="Яркость">
           <font>
             <Font size="15.0" fx:id="x1" />
           </font>
         </Label>
         <Label font="$x1" layoutX="29.0" layoutY="147.0" text="Контрастность" />
-        <Button layoutX="173.0" layoutY="239.0" mnemonicParsing="false" onAction="#redHist" prefWidth="134.0" text="Red Histogram" />
-        <Button layoutX="173.0" layoutY="280.0" mnemonicParsing="false" onAction="#greenHist" text="Green Histogram" />
-        <Button layoutX="173.0" layoutY="319.0" mnemonicParsing="false" onAction="#blueHist" prefWidth="134.0" text="Blue Histogram" />
-        <Button layoutX="173.0" layoutY="362.0" mnemonicParsing="false" onAction="#brightHist" text="Bright Histogram" />
+        <Button layoutX="173.0" layoutY="212.0" mnemonicParsing="false" onAction="#redHist" prefHeight="30.0" prefWidth="134.0" text="Red Histogram" />
+        <Button layoutX="173.0" layoutY="253.0" mnemonicParsing="false" onAction="#greenHist" prefHeight="30.0" text="Green Histogram" />
+        <Button layoutX="173.0" layoutY="292.0" mnemonicParsing="false" onAction="#blueHist" prefHeight="30.0" prefWidth="134.00009999999747" text="Blue Histogram" />
+        <Button layoutX="173.0" layoutY="329.0" mnemonicParsing="false" onAction="#brightHist" prefHeight="30.0" text="Bright Histogram" />
       </children>
     </Pane>
     <Canvas fx:id="canvas" height="200.0" layoutX="14.0" layoutY="10.0" width="200.0" />

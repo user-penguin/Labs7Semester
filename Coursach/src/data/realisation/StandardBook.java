@@ -12,6 +12,7 @@ public class StandardBook implements IBook {
     private String name;
     private  String year;
     private String author;
+    private ArrayList<Integer> users;
     private ArrayList<Tag> tags;
 
     public StandardBook(String name, String author, String year, ArrayList<Tag> tags) {
@@ -20,6 +21,7 @@ public class StandardBook implements IBook {
         setYear(year);
         this.tags = new ArrayList<>();
         putTags(tags);
+        this.users = new ArrayList<>();
     }
 
     @Override
@@ -48,6 +50,11 @@ public class StandardBook implements IBook {
     }
 
     @Override
+    public void putUser(int id) {
+        this.users.add(id);
+    }
+
+    @Override
     public String getName() {
         return this.name;
     }
@@ -73,6 +80,12 @@ public class StandardBook implements IBook {
     }
 
     @Override
+    public ArrayList<Integer> getAllUserNum() {
+        return this.users;
+    }
+
+    @Override
+    // перевод в JSON
     public JSONObject toJSON() {
         JSONObject result = new JSONObject();
         result.put("id", this.id);
@@ -81,13 +94,19 @@ public class StandardBook implements IBook {
         result.put("year", this.year);
         // вбиваем тэги в лист
         JSONArray tagsJSON = new JSONArray();
-        for (Tag tag: tags) {
+        for (Tag tag: this.tags) {
             tagsJSON.add(tag.toString());
         }
         result.put("tags", tagsJSON);
+        JSONArray usersJSON = new JSONArray();
+        for (int id: this.users) {
+            usersJSON.add(id);
+        }
+        result.put("users", usersJSON);
         return  result;
     }
 
+    // перевод из JSON в объект книги
     public static StandardBook toBook(JSONObject BookJSON) {
         ArrayList<Tag> tagList = new ArrayList<>();
         JSONArray tagListJSON = (JSONArray) BookJSON.get("tags");
@@ -100,6 +119,10 @@ public class StandardBook implements IBook {
                 BookJSON.get("year").toString(),
                 tagList);
         book.setId(Integer.parseInt(BookJSON.get("id").toString()));
+        JSONArray usersJSON = (JSONArray) BookJSON.get("users");
+        for (Object user: usersJSON) {
+            book.putUser(Integer.parseInt(user.toString()));
+        }
         return book;
     }
 }

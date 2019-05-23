@@ -18,7 +18,6 @@ public class Library implements ILibrary {
     private String name;
     private ArrayList<IBook> books;
     private ArrayList<IUser> users;
-
     public Library(String name) {
         this.name = name;
         books = new ArrayList<>();
@@ -31,24 +30,19 @@ public class Library implements ILibrary {
         // выдёргиваем массив книг в джсон формате
         JSONArray allBooksFromJSON = (JSONArray) booksFromFile.get("books");
         for (Object book: allBooksFromJSON) {
-            // создадим новую книгу
-            JSONObject bookFrame = (JSONObject) book;
-            // создадим лист тегов для новой книги
-            ArrayList<Tag> tagList = new ArrayList<>();
-            JSONArray tagListJSON = (JSONArray) bookFrame.get("tags");
-            for (Object tag: tagListJSON) {
-                tagList.add(Tag.valueOf(tag.toString()));
-            }
-            StandardBook realBook = new StandardBook(
-                    bookFrame.get("name").toString(),
-                    bookFrame.get("author").toString(),
-                    bookFrame.get("year").toString(),
-                    tagList);
-            bookArrayList.add(realBook);
+            // создадим новую книгу и добавим её в список
+            JSONObject oneUser = (JSONObject) book;
+            bookArrayList.add(StandardBook.toBook(oneUser));
         }
-
+        // аналогично с юзерами
         JSONObject usersFromFile = DBTools.getUsersJSON();
-
+        ArrayList<IUser> userArrayList = new ArrayList<>();
+        JSONArray allUsersFromJSON = (JSONArray) usersFromFile.get("users");
+        for (Object user: allUsersFromJSON) {
+            JSONObject oneUser = (JSONObject) user;
+            userArrayList.add(User.toUser(oneUser));
+        }
+        System.out.println("Library was init");
     }
 
     public ArrayList<IUser> getUsers() {
