@@ -1,5 +1,6 @@
 package diagram;
 
+import interpreter.MyStack;
 import object.Node;
 import object.ProgramTree;
 import object.TypeData;
@@ -17,6 +18,9 @@ public class MyDiagram {
     private ProgramTree tree;
     private ProgramTree thisTree;
     private Deque<ProgramTree> stack = new LinkedList<>();
+    private MyStack myStack = new MyStack();
+
+    private boolean interpreterFlag = false;
 
     public MyDiagram (Scanner scanner) {
         this.scanner = scanner;
@@ -59,6 +63,8 @@ public class MyDiagram {
         if (token.getType() == TokenType.VOID) {
             tokenFunction = nextToken(TokenType.Id, "Ожидался идентификатор");
         } else {
+            // встретилась главная функция
+            // todo проверить на единственность - дальше есть, нужно проверить
             nextToken(TokenType.STATIC, "Ожидался static");
             nextToken(TokenType.VOID, "Ожидался void");
             tokenFunction = nextToken(TokenType.MAIN_FUNC, "Ожидался main");
@@ -167,20 +173,31 @@ public class MyDiagram {
     }
 
     private void variable (TypeData typeData) {
+        // запоминаем имя переменной
         Token varName = nextToken(TokenType.Id, "Ожидался ID");
         boolean init = false;
         Token token = nextTokenRead();
-        // выражение
+        // если просто переменная
         if (token.getType() == TokenType.Assign) {
             nextToken(TokenType.Assign, "Ожидался символ =");
             token = nextTokenRead();
             if (isExpression(token)) {
-                expression();
+                // получаем узел с посчитанным выражением
+                Node node = expression();
+                // если вдруг вернулось давловское в интовое, вернуть ошибку, так завещала java
+                if ((typeData == TypeData.CHAR || typeData == TypeData.INTEGER)
+                        && node.typeData == TypeData.DOUBLE) {
+                    printError("Ошибка приведения типов, double недопустим");
+                }
             } else {
                 printError("Ожидалось выражение");
             }
+            // если после присваивания
             init = true;
-        } else if (token.getType() == TokenType.Open_Square) { // массив
+
+
+            // если массив
+        } else if (token.getType() == TokenType.Open_Square) {
             nextToken(TokenType.Open_Square, "Ожидался символ [");
             nextToken(TokenType.Close_Square, "Ожидался символ ]");
             if (thisTree.findUpVarOrArray(varName.getText()) != null) {
@@ -192,16 +209,34 @@ public class MyDiagram {
                 token = scanner.nextScanner();
 
                 TypeData typeDataOfArray;
-                if (token.getType() != TokenType.INT && token.getType() != TokenType.DOUBLE)
+                if (token.getType() != TokenType.INT && token.getType() != TokenType.DOUBLE) {
                     printError("Ожидался тип");
-                if (token.getType() == TokenType.DOUBLE)
-                    typeDataOfArray = TypeData.DOUBLE;
-                else
-                    typeDataOfArray = TypeData.INTEGER;
-                // @TODO: перепилить под норм целочисленку
+                }
+                if (tokenTypeToTypeData(token.getType()) != typeData) {
+                    printError("Найдено несоответствие типов массива");
+                }
+                // запоминаем тип массива
+                typeDataOfArray = tokenTypeToTypeData(token.getType());
 
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
-                Token tokenN = nextToken(TokenType.INT, "Ожидалось целое");
+
+                // здесь нужно посмотреть, стоит ли там целочисленная константа или интовая переменная
+                token = nextTokenRead();
+                Node arrValNode = null;
+                if (isExpression(token)) {
+                    Node node = expression();
+                    // что-то получили, теперь нужно проанализировать
+                    if (!node.typeObject.equals(TypeData.INTEGER)) {
+                        printError("Ожидалось целочисленное выражение");
+                    }
+                    if (node.value_int <= 0) {
+                        printError("Размера массива не может быть меньше единицы");
+                    }
+                    else {
+                        arrValNode = node;
+                    }
+                }
+
                 if (thisTree.findUpArray(varName.getText()) != null) {
                     Node mass = thisTree.findUpArray(varName.getText()).node;
                     mass.n = Integer.parseInt(tokenN.getText());
@@ -210,8 +245,7 @@ public class MyDiagram {
                 nextToken(TokenType.Close_Square, "Ожидался символ ]");
                 if (typeData == typeDataOfArray) {
                     addArray(typeData, true, varName, Integer.parseInt(tokenN.getText()));
-                }
-                else {
+                } else {
                     printSemError("Неверный тип массива");
                 }
             } else {
@@ -222,6 +256,18 @@ public class MyDiagram {
         addVar(typeData, init, varName);
     }
 
+    // перевод TokenType в TypeData
+    private TypeData tokenTypeToTypeData(TokenType tokenType) {
+        if (tokenType.equals(TokenType.INT)) {
+            return TypeData.INTEGER;
+        }
+        if (tokenType.equals(TokenType.DOUBLE)) {
+            return TypeData.DOUBLE;
+        }
+        return TypeData.UNKNOW;
+    }
+
+    // добавление массива
     private void addArray (TypeData typeData, boolean init, Token name, int n) {
         if (thisTree.findUpArray(name.getText()) != null) {
             printSemError("Массив " + name.getText() + " уже существует");
@@ -233,6 +279,7 @@ public class MyDiagram {
         }
     }
 
+    // добавление переменной
     private void addVar (TypeData typeData, boolean init, Token name) {
         if (thisTree.findUpVar(name.getText()) != null) {
             printSemError("Переменная " + name.getText() + " уже существует");
@@ -629,16 +676,16 @@ public class MyDiagram {
         if (token.getType() == TokenType.Id) {
             Token tokenName = token;
             token = nextTokenRead();
-
+            // если впереди массив []
             if (token.getType() == TokenType.Open_Square) {
                 nextToken(TokenType.Open_Square, "Ожидался символ [");
                 token = nextTokenRead();
                 if (isExpression(token)) {
                     Node node = expression();
                 } else {
+                    // выражение или инт-константа
                     nextToken(TokenType.INT, "Ожидалось целое");
                 }
-//                nextToken(TokenType.INT, "Ожидалось целое");
                 nextToken(TokenType.Close_Square, "Ожидался символ ]");
                 if (thisTree.findUpVarOrArray(tokenName.getText()) != null)
                     return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
@@ -647,8 +694,11 @@ public class MyDiagram {
                     return Node.createUnknow();
                 }
             } else {
-                if (thisTree.findUpVarOrArray(tokenName.getText()) != null)
-                    return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
+                if (thisTree.findUpVarOrArray(tokenName.getText()) != null) {
+                    // если переменная
+                    //return Node.createConst(thisTree.findUpVarOrArray(tokenName.getText()).node.typeData);
+                    return thisTree.findUpVarOrArray(tokenName.getText()).node;
+                }
                 else {
                     printSemError("Неизвестная переменная");
                     return Node.createUnknow();
@@ -665,11 +715,34 @@ public class MyDiagram {
             nextToken(TokenType.Close_Breaket, "Ожидался символ )");
             return node;
         } else if (token.getType() == TokenType.INT) {
-            return Node.createConst(TypeData.INTEGER);
+            Node node = new Node();
+            node.value_int = Integer.parseInt(token.getText());
+            node.isInit = true;
+            // вопросики псц
+            node.typeObject = TypeObject.CONST;
+            node.typeData = TypeData.INTEGER;
+            return node;
+//            return Node.createConst(TypeData.INTEGER);
         } else if (token.getType() == TokenType.DOUBLE) {
-            return Node.createConst(TypeData.DOUBLE);
+            Node node = new Node();
+            node.value_double = Double.parseDouble(token.getText());
+            node.isInit = true;
+            node.typeData = TypeData.DOUBLE;
+            // вопросики опять же
+            node.typeObject = TypeObject.CONST;
+
+            return node;
+//            return Node.createConst(TypeData.DOUBLE);
         }  else {
-            return Node.createConst(TypeData.CHAR);
+            Node node = new Node();
+            node.value_int = token.getText().charAt(0);
+            node.isInit = true;
+            node.typeData = TypeData.CHAR;
+            // и тут косяк, но разберёмся попозже
+            node.typeObject = TypeObject.CONST;
+
+            return node;
+//            return Node.createConst(TypeData.CHAR);
         }
     }
 

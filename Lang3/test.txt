@@ -1,11 +1,13 @@
 class Main {
     void kek() {
-
+        int a = 1;
     }
 
     public static void main() {
         int a;
+        a = 2 + 2 - 4;
+        int d = 1;
         kek();
-        int m[] = new int [d];
+        int m[] = new int[19];
     }
 }

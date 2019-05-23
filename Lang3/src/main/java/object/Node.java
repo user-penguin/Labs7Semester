@@ -1,14 +1,18 @@
 package object;
 
-public class Node {
+public abstract class Node {
     String name;
-    TypeObject typeObject;
+    public TypeObject typeObject;
     public TypeData typeData;
 
     public int n;
     public boolean isInit;
 
-    private Node() {
+    public int value_int;
+    public double value_double;
+    public char value_char;
+
+    public Node() {
         isInit = false;
     }
 
