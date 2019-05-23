@@ -5,4 +5,6 @@ import object.TypeObject;
 public interface INode {
     public TypeObject getTypeObject ();
 
+    @Override
+    public String toString();
 }
