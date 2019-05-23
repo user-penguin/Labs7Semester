@@ -1,4 +1,4 @@
-import diagram.Diagram;
+import diagram.MyDiagram;
 import io.Reader;
 import parser.Scanner;
 import parser.Token;
@@ -16,7 +16,7 @@ public class MainTree {
         }
 
         Scanner scanner = new Scanner(text);
-        Diagram diagram = new Diagram(scanner);
+        MyDiagram diagram = new MyDiagram(scanner);
 
         diagram.program();
 

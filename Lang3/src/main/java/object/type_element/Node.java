@@ -4,9 +4,11 @@ import object.TypeData;
 import object.TypeObject;
 
 public abstract class Node implements INode {
-    String name;
+    public String name;
     public TypeObject typeObject;
     public TypeData typeData;
+    public int n;
+    private Variable[] arrayElements;
 
     public boolean isInit;
 

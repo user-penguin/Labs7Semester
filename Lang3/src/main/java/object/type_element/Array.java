@@ -7,7 +7,7 @@ public class Array extends Node {
     public int n;
     private Variable[] arrayElements;
 
-    public static Node createArray(String name, TypeData typeData, int n) {
+    public static Array createArray(String name, TypeData typeData, int n) {
         Array node = new Array();
         node.typeObject = TypeObject.ARRAY;
         node.name = name;
@@ -21,6 +21,7 @@ public class Array extends Node {
         String str = typeObject.toString();
         str += " init = " + this.isInit;
         str += " size = " + this.n;
+        str += " type = " + this.typeData;
         return str;
     }
 }

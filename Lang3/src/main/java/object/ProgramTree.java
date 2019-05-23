@@ -1,5 +1,6 @@
 package object;
 
+import object.type_element.Class;
 import object.type_element.Node;
 
 public class ProgramTree {
@@ -16,7 +17,7 @@ public class ProgramTree {
     }
 
     public ProgramTree(String name) {
-        node = Node.createClass(name);
+        node = Class.createClass(name);
         up = null;
         left = null;
         right = null;

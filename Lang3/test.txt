@@ -5,9 +5,9 @@ class Main {
 
     public static void main() {
         int a;
-        a = 2 + 2 - 4;
+        a = 2;
         int d = 1;
         kek();
-        int m[] = new int[19];
+        int m[] = new int[a];
     }
 }

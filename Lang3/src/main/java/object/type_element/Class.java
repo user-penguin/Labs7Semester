@@ -5,7 +5,7 @@ import object.TypeObject;
 
 public class Class extends Node {
 
-    static Node createClass(String name) {
+    public static Node createClass(String name) {
         Class node = new Class();
         node.typeObject = TypeObject.CLASS;
         node.name = name;
