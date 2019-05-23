@@ -1,6 +1,6 @@
 package interpreter;
 
-import object.Node;
+import object.type_element.Node;
 
 import java.util.ArrayList;
 import java.util.List;

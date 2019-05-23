@@ -1,5 +1,7 @@
 package object;
 
+import object.type_element.Node;
+
 public class ProgramTree {
     public Node node;
     private ProgramTree up;

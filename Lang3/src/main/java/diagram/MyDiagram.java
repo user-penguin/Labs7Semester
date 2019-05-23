@@ -1,7 +1,7 @@
 package diagram;
 
 import interpreter.MyStack;
-import object.Node;
+import object.type_element.Node;
 import object.ProgramTree;
 import object.TypeData;
 import object.TypeObject;

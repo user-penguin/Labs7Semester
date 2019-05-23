@@ -1,11 +1,13 @@
-package object;
+package object.type_element;
 
-public abstract class Node {
+import object.TypeData;
+import object.TypeObject;
+
+public abstract class Node implements INode {
     String name;
     public TypeObject typeObject;
     public TypeData typeData;
 
-    public int n;
     public boolean isInit;
 
     public int value_int;
@@ -21,7 +23,7 @@ public abstract class Node {
     }
 
     public static Node createVar(String name, TypeData typeData) {
-        Node node = new Node();
+        Variable node = new Variable();
         node.typeObject = TypeObject.VAR;
         node.name = name;
         node.typeData = typeData;
@@ -29,7 +31,7 @@ public abstract class Node {
     }
 
     public static Node createArray(String name, TypeData typeData, int n) {
-        Node node = new Node();
+        Array node = new Array();
         node.typeObject = TypeObject.ARRAY;
         node.name = name;
         node.typeData = typeData;
@@ -38,7 +40,7 @@ public abstract class Node {
     }
 
     public static Node createFunction(String name) {
-        Node node = new Node();
+        Function node = new Function();
         node.typeObject = TypeObject.FUNCTION;
         node.name = name;
         node.typeData = TypeData.VOID;
@@ -46,7 +48,7 @@ public abstract class Node {
     }
 
     static Node createClass(String name) {
-        Node node = new Node();
+        Class node = new Class();
         node.typeObject = TypeObject.CLASS;
         node.name = name;
         node.typeData = TypeData.VOID;
@@ -54,20 +56,20 @@ public abstract class Node {
     }
 
     public static Node createEmptyNode() {
-        Node node = new Node();
+        Empty node = new Empty();
         node.typeObject = TypeObject.EMPTY;
         return node;
     }
 
     public static Node createConst(TypeData typeData) {
-        Node node = new Node();
+        Const node = new Const();
         node.typeObject = TypeObject.CONST;
         node.typeData = typeData;
         return node;
     }
 
     public static Node createUnknow() {
-        Node node = new Node();
+        Unknown node = new Unknown();
         node.typeObject = TypeObject.CONST;
         node.typeData = TypeData.UNKNOW;
         return node;
